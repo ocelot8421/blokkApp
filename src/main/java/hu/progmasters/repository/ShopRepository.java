@@ -10,18 +10,25 @@ public class ShopRepository {
 
     Connection connection;
 
+    public ShopRepository() {
+        try {
+            this.connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
     public void createShopTable() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            Statement statement = connection.createStatement();
 
-            String createTable = "CREATE TABLE IF NOT EXISTS shops" +
+        String createTable = "CREATE TABLE IF NOT EXISTS shops" +
                     "(ID INT PRIMARY KEY, " +
                     "name VARCHAR(50), " +
                     "city VARCHAR(50), " +
                     "street VARCHAR(50) " +
                     "); ";
-            statement.execute(createTable);
+           try (Statement statement = connection.createStatement()) {
+               statement.execute(createTable);
 
         } catch (SQLException e) {
             e.printStackTrace();
