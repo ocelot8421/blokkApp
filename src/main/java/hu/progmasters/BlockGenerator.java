@@ -3,18 +3,29 @@ package hu.progmasters;
 import java.sql.*;
 import java.util.Scanner;
 
+import static hu.progmasters.config.DatabaseConfig.*;
+
 public class BlockGenerator {
-
-    public static final String DB_URL =
-            "jdbc:mysql://blokkapp.cwb4knygtzsz.us-east-1.rds.amazonaws.com:3306/blokk_app?useSSL=false&serverTimezone=UTC";
-    public static final String USER = "root";
-    public static final String PASSWORD = "Test123!";
-
     public static void main(String[] args) {
 
         createShopTable();
 //        createShop();
         updateShop();
+
+////        try (Scanner scanner = new Scanner(System.in)) {
+////            giveShopInfo();
+////
+////            System.out.println("Which shop do you want to modify? (Enter its ID");
+////            System.out.println("Shop's ID:");
+////            int shopID = scanner.nextInt();
+////            scanner.nextLine();
+////            System.out.println("Which field would you like to modify?");
+////            String shopField = scanner.nextLine();
+////            System.out.println("What is the new value?");
+////            String shopValue = scanner.nextLine();
+////
+////            updateShop(shopValue, shopID);
+////        }
 
     }
 
@@ -37,8 +48,17 @@ public class BlockGenerator {
             String updateShop =
                     "UPDATE shops SET " + shopFiled + " = '" + shopValue + "' " +
                             "WHERE id = " + shopID + ";";
-            statement.execute("SET sql_safe_updates = 0");  // Safe update be es kikapcsolasa ezzel a paranccsal
-            int affectedRows = statement.executeUpdate(updateShop); // sql parancsot rárakjuk a kocsira
+////            String updateShop =
+////                    "UPDATE shops SET ? = ? " +
+////                            "WHERE id = ?";
+////            PreparedStatement preparedStatement = connection.prepareStatement(updateShop);
+////            preparedStatement.setString(1, field);
+////            preparedStatement.setString(2, value);
+////            preparedStatement.setInt(3, id);
+            statement.execute("SET sql_safe_updates = 0");
+            int affectedRows = statement.executeUpdate(updateShop);
+//            int affectedRows = preparedStatement.executeUpdate(updateShop);
+
             System.out.println("Number of modified shops: " + affectedRows);
             giveShopInfo();
 
@@ -53,11 +73,18 @@ public class BlockGenerator {
 
             String shopInfo = "SELECT * from shops";
             ResultSet resultSet = statement.executeQuery(shopInfo);
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+            int columnsNumber = resultSetMetaData.getColumnCount();
+            for (int i = 1; i <= columnsNumber; i++) {
+                System.out.print(" -- " + resultSetMetaData.getColumnName(i));
+            }
+            System.out.println();
             while (resultSet.next()) {
-                for (int i = 1; i <= 4; i++) {
-                    System.out.print(resultSet.getObject(i) + " -- ");
+                for (int i = 1; i <= columnsNumber; i++) {
+                    System.out.print(" -- " + resultSet.getObject(i));
                 }
-                System.out.println();
+                System.out.println(" utca");
             }
 
         } catch (SQLException e) {
@@ -68,8 +95,6 @@ public class BlockGenerator {
     private static void createShop() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD); Scanner scanner = new Scanner(System.in)) {
             Statement statement = connection.createStatement();
-
-            shopNameCityStreetScanner();
 
             System.out.println("Shop's ID:");
             int shopID = scanner.nextInt();
@@ -93,10 +118,6 @@ public class BlockGenerator {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }
-
-    private static void shopNameCityStreetScanner() {
     }
 
     private static void createShopTable() {
