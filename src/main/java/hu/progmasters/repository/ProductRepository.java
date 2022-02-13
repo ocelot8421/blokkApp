@@ -1,9 +1,11 @@
 package hu.progmasters.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import hu.progmasters.domain.Product;
+
+import java.sql.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static hu.progmasters.repository.DataBaseConfig.*;
 
@@ -33,4 +35,38 @@ public class ProductRepository {
     }
 
 
+    public String createNewProduct(Product product) {
+        String infoBack = "Product can not be created";
+        String insertCityStatement = "INSERT INTO product VALUES (?,?,?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertCityStatement)) {
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setDouble(3, product.getPrice());
+
+            preparedStatement.executeUpdate();
+            infoBack = "Product created";
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return infoBack;
+    }
+
+    public List<Product> searchAllProductOrderByPrice() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product ORDER BY price";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                products.add(new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("price")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
 }
+
+

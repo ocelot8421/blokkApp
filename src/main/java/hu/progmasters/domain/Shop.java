@@ -1,8 +1,5 @@
 package hu.progmasters.domain;
 
-
-
-
 public class Shop {
 
     private int id;
@@ -43,7 +40,11 @@ public class Shop {
     }
 
     @Override
-    public java.lang.String toString() {
-        return franchise + ", " + address;
+    public String toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", franchise='" + franchise + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
