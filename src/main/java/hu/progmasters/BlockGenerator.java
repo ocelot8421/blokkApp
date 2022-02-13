@@ -13,14 +13,63 @@ public class BlockGenerator {
     public static void main(String[] args) {
 
         createShopTable();
-        createShop();
+//        createShop();
+        updateShop();
 
     }
 
-    private static void createShop() {
-
+    private static void updateShop() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD); Scanner scanner = new Scanner(System.in)) {
             Statement statement = connection.createStatement();
+
+            giveShopInfo();
+            System.out.println("Which shop do you want to modify? (Enter its ID");
+
+
+            System.out.println("Shop's ID:");
+            int shopID = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Which field would you like to modify?");
+            String shopFiled = scanner.nextLine();
+            System.out.println("What is the new value?");
+            String shopValue = scanner.nextLine();
+
+            String updateShop =
+                    "UPDATE shops SET " + shopFiled + " = '" + shopValue + "' " +
+                            "WHERE id = " + shopID + ";";
+            statement.execute("SET sql_safe_updates = 0");  // Safe update be es kikapcsolasa ezzel a paranccsal
+            int affectedRows = statement.executeUpdate(updateShop); // sql parancsot rárakjuk a kocsira
+            System.out.println("Number of modified shops: " + affectedRows);
+            giveShopInfo();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void giveShopInfo() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+            Statement statement = connection.createStatement();
+
+            String shopInfo = "SELECT * from shops";
+            ResultSet resultSet = statement.executeQuery(shopInfo);
+            while (resultSet.next()) {
+                for (int i = 1; i <= 4; i++) {
+                    System.out.print(resultSet.getObject(i) + " -- ");
+                }
+                System.out.println();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createShop() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD); Scanner scanner = new Scanner(System.in)) {
+            Statement statement = connection.createStatement();
+
+            shopNameCityStreetScanner();
 
             System.out.println("Shop's ID:");
             int shopID = scanner.nextInt();
@@ -38,11 +87,16 @@ public class BlockGenerator {
             statement.execute(createShop);
 
             System.out.println("New shop has been created");
-
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("A shop has been already existed with this ID");
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private static void shopNameCityStreetScanner() {
     }
 
     private static void createShopTable() {
