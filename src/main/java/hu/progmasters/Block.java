@@ -1,4 +1,4 @@
-package main.java.hu.progmasters;
+package hu.progmasters;
 
 public class Block {
     private BlockHead blockHead;
