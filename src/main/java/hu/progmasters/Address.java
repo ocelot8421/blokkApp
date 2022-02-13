@@ -1,4 +1,4 @@
-package main.java.hu.progmasters;
+package hu.progmasters;
 
 public class Address {
     private String city;
