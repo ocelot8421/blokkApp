@@ -23,8 +23,7 @@ public class ShopRepository {
                     "); ";
             statement.execute(createTable);
 
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -39,12 +38,29 @@ public class ShopRepository {
 
             preparedStatement.executeUpdate();
             System.out.println("Shop created");
-        } catch (
-                SQLException throwables) {
+
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    public Shop searchShopByName (String franchise) {
+        Shop shop = null;
+        String sql = "SELECT id, franchise, address FROM shops WHERE franchise = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(2, franchise);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-
+            if (resultSet.next()) {
+                shop = new Shop(
+                        resultSet.getInt("id"),
+                        resultSet.getString("franchise"),
+                        resultSet.getString("address")
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return shop;
+    }
 }
