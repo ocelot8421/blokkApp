@@ -1,5 +1,6 @@
 package hu.progmasters.repository;
 
+import hu.progmasters.Address;
 import hu.progmasters.domain.Shop;
 
 import java.sql.*;
@@ -59,6 +60,7 @@ public class ShopRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                Address address = new Address()
                 shop = new Shop(
                         resultSet.getInt("id"),
                         resultSet.getString("franchise"),

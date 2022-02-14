@@ -1,12 +1,14 @@
 package hu.progmasters.domain;
 
+import hu.progmasters.Address;
+
 public class Shop {
 
     private int id;
     private String franchise;
-    private String address;
+    private Address address;
 
-    public Shop(int id, String franchise, String address) {
+    public Shop(int id, String franchise, Address address) {
         this.id = id;
         this.franchise = franchise;
         this.address = address;
@@ -31,11 +33,11 @@ public class Shop {
         this.franchise = franchise;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
