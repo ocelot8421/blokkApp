@@ -6,9 +6,6 @@ import hu.progmasters.domain.Shop;
 import java.sql.*;
 import java.util.Scanner;
 
-import static hu.progmasters.config.DatabaseConfig.DB_URL;
-import static hu.progmasters.config.DatabaseConfig.PASSWORD;
-import static hu.progmasters.config.DatabaseConfig.USER;
 import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class ShopRepository {
@@ -77,7 +74,7 @@ public class ShopRepository {
         return shop;
     }
 
-    private static void updateShop() {
+    public static void updateShop() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD); Scanner scanner = new Scanner(System.in)) {
             Statement statement = connection.createStatement();
 
@@ -125,7 +122,7 @@ public class ShopRepository {
                 for (int i = 1; i <= columnsNumber; i++) {
                     System.out.print(" -- " + resultSet.getObject(i));
                 }
-                System.out.println(" utca");
+                System.out.println(" út/utca");
             }
 
         } catch (SQLException e) {

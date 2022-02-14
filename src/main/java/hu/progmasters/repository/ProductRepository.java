@@ -3,14 +3,13 @@ package hu.progmasters.repository;
 import hu.progmasters.domain.Product;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter; //TODO
 import java.util.ArrayList;
 import java.util.List;
 
 import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class ProductRepository {
-
     Connection connection;
 
     public ProductRepository() {
@@ -69,6 +68,25 @@ public class ProductRepository {
     }
 
 
+    public Product searchProductById(int id) {
+        Product product = null;
+        String sql = "SELECT id, name, price FROM product WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                product = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("price")
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return product;
+    }
 }
 
 
