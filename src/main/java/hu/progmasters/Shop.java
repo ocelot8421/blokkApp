@@ -1,5 +1,7 @@
 package hu.progmasters;
 
+import hu.progmasters.domain.Address;
+
 import java.util.Scanner;
 
 public class Shop {

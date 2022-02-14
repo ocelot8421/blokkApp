@@ -48,16 +48,10 @@ public class BlockGenerator {
             String updateShop =
                     "UPDATE shops SET " + shopFiled + " = '" + shopValue + "' " +
                             "WHERE id = " + shopID + ";";
-////            String updateShop =
-////                    "UPDATE shops SET ? = ? " +
-////                            "WHERE id = ?";
-////            PreparedStatement preparedStatement = connection.prepareStatement(updateShop);
-////            preparedStatement.setString(1, field);
-////            preparedStatement.setString(2, value);
-////            preparedStatement.setInt(3, id);
+
             statement.execute("SET sql_safe_updates = 0");
             int affectedRows = statement.executeUpdate(updateShop);
-//            int affectedRows = preparedStatement.executeUpdate(updateShop);
+
 
             System.out.println("Number of modified shops: " + affectedRows);
             giveShopInfo();

@@ -1,4 +1,4 @@
-package hu.progmasters;
+package hu.progmasters.domain;
 
 public class Address {
     private String city;

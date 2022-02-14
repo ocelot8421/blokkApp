@@ -1,7 +1,5 @@
 package hu.progmasters.domain;
 
-import hu.progmasters.Address;
-
 public class Shop {
 
     private int id;
