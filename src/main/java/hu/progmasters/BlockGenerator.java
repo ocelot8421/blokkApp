@@ -3,29 +3,33 @@ package hu.progmasters;
 import java.sql.*;
 import java.util.Scanner;
 
-import static hu.progmasters.config.DatabaseConfig.*;
+import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class BlockGenerator {
+
+    public static final String DB_URL =
+            "jdbc:mysql://localhost:3306/blokk_app_local?useSSL=false&serverTimezone=UTC";
+    public static final String USER = "root";
+    public static final String PASSWORD = "Test123!";
+
     public static void main(String[] args) {
 
         createShopTable();
 //        createShop();
         updateShop();
 
-////        try (Scanner scanner = new Scanner(System.in)) {
-////            giveShopInfo();
-////
-////            System.out.println("Which shop do you want to modify? (Enter its ID");
-////            System.out.println("Shop's ID:");
-////            int shopID = scanner.nextInt();
-////            scanner.nextLine();
-////            System.out.println("Which field would you like to modify?");
-////            String shopField = scanner.nextLine();
-////            System.out.println("What is the new value?");
-////            String shopValue = scanner.nextLine();
-////
-////            updateShop(shopValue, shopID);
-////        }
+       /*
+       System.out.println("Press number for choose between options");
+        System.out.println("1: Create new Plane and save to database"); //Create new Product and save to database
+        System.out.println("2: Search Plane by id"); //Search Product by id
+        System.out.println("3: Print all Plane data"); //Print all Product data"
+        System.out.println("4: Create new City and save to database"); //Create new Shop and save to database"
+        System.out.println("5: Search City by id"); //Search Shop by id"
+        System.out.println("6: Print all City data"); //Print all Shop data
+        System.out.println("7: Create new flight"); //Create new blokk
+        System.out.println("8: Search Flight by id"); //Search blokk by id
+        System.out.println("9: Quit");
+        */
 
     }
 
@@ -48,16 +52,10 @@ public class BlockGenerator {
             String updateShop =
                     "UPDATE shops SET " + shopFiled + " = '" + shopValue + "' " +
                             "WHERE id = " + shopID + ";";
-////            String updateShop =
-////                    "UPDATE shops SET ? = ? " +
-////                            "WHERE id = ?";
-////            PreparedStatement preparedStatement = connection.prepareStatement(updateShop);
-////            preparedStatement.setString(1, field);
-////            preparedStatement.setString(2, value);
-////            preparedStatement.setInt(3, id);
+
             statement.execute("SET sql_safe_updates = 0");
             int affectedRows = statement.executeUpdate(updateShop);
-//            int affectedRows = preparedStatement.executeUpdate(updateShop);
+
 
             System.out.println("Number of modified shops: " + affectedRows);
             giveShopInfo();
