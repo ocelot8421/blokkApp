@@ -6,10 +6,7 @@ import hu.progmasters.domain.Shop;
 import java.sql.*;
 import java.util.Scanner;
 
-import static hu.progmasters.config.DatabaseConfig.DB_URL;
-import static hu.progmasters.config.DatabaseConfig.PASSWORD;
-import static hu.progmasters.config.DatabaseConfig.USER;
-import static hu.progmasters.repository.DataBaseConfig.*;
+import static hu.progmasters.config.DatabaseConfig.*;
 
 public class ShopRepository {
 
