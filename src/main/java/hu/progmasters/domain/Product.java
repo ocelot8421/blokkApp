@@ -5,7 +5,7 @@ public class Product {
     private int id;
     private String name;
     private double price;
-    // private double mennyiseg; ?
+    private double amount;
 
     public Product(int id, String name, double price) {
         this.id = id;
