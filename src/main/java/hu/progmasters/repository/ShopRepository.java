@@ -4,6 +4,8 @@ import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static hu.progmasters.repository.DataBaseConfig.*;
@@ -138,8 +140,9 @@ public class ShopRepository {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            Address address;
             if (resultSet.next()) {
-                Address address = new Address(
+                address = new Address(
                         resultSet.getInt("id"),
                         resultSet.getString("city"),
                         resultSet.getString("street")
@@ -154,5 +157,31 @@ public class ShopRepository {
             throwables.printStackTrace();
         }
         return shop;
+    }
+
+    public List<Shop> printOutAllShopDetails() {
+        List<Shop> shops = new ArrayList<>();
+        String sql = "SELECT * FROM city";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Address address;
+            while (resultSet.next()) {
+                address = new Address(
+                        resultSet.getInt("id"),
+                        resultSet.getString("city"),
+                        resultSet.getString("street")
+                );
+                shops.add(new Shop(
+                        resultSet.getInt("id"),
+                        resultSet.getString("franchise"),
+                        address
+                ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return shops;
     }
 }

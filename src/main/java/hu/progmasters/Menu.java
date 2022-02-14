@@ -1,20 +1,13 @@
 package hu.progmasters;
 
 import java.util.List;
-//    import hu.progmasters.jdbc.exercise.oraifeladat.domain.Shop;
 import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
-//import hu.progmasters.jdbc.exercise.oraifeladat.domain.Block;
 import hu.progmasters.domain.Block;
-//import hu.progmasters.jdbc.exercise.oraifeladat.domain.Product;
 import hu.progmasters.domain.Product;
-//import hu.progmasters.jdbc.exercise.oraifeladat.repository.ShopRepository;
 import hu.progmasters.repository.ShopRepository;
-//import hu.progmasters.jdbc.exercise.oraifeladat.repository.BlockRepository;
 import hu.progmasters.repository.BlockRepository;
-//import hu.progmasters.jdbc.exercise.oraifeladat.repository.ProductRepository;
 import hu.progmasters.repository.ProductRepository;
-//import hu.progmasters.jdbc.exercise.oraifeladat.ui.Ui;
 import hu.progmasters.ui.Ui;
 
 import java.util.List;
