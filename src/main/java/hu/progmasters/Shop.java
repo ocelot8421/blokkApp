@@ -3,7 +3,7 @@ package hu.progmasters;
 import java.util.Scanner;
 
 public class Shop {
-    private String name;
+    private String name; //TODO franchise, name
     private Address address;
 
     public Shop(String name, Address address) {
