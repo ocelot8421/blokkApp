@@ -37,8 +37,8 @@ public class ShopRepository {
         }
     }
 
-    public void createNewShop(Shop shop) {
-
+    public String createNewShop(Shop shop) {
+        String infoBack = "Shop can not be created";
         String insertShopStatement = "INSERT INTO shop VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertShopStatement)) {
             preparedStatement.setInt(1, shop.getId());
@@ -47,10 +47,11 @@ public class ShopRepository {
 
             preparedStatement.executeUpdate();
             System.out.println("Shop created");
-
+            infoBack = "Shop created";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return infoBack;
     }
 
     public Shop searchShopByName (String franchise) {

@@ -2,6 +2,7 @@ package hu.progmasters;
 
 import java.util.List;
 //    import hu.progmasters.jdbc.exercise.oraifeladat.domain.Shop;
+import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
 //import hu.progmasters.jdbc.exercise.oraifeladat.domain.Block;
 import hu.progmasters.domain.Block;
@@ -61,8 +62,9 @@ public class Menu {
                     System.out.println(products);
                     break;
                 case 4:
+                    Address address = new Address(ui.askIntFromUser(), ui.askTextFromUser(), ui.askTextFromUser());
                     String newShopInfo = shopRepository.createNewShop(new Shop(ui.askIntFromUser(),
-                            ui.askTextFromUser(), ui.askdoubleFromUser(), ui.askdoubleFromUser()));
+                            ui.askTextFromUser(), address));
                     System.out.println(newShopInfo);
                     break;
                 case 5:
