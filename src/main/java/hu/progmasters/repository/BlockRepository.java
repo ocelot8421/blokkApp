@@ -6,7 +6,7 @@ import hu.progmasters.domain.Shop;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 
-import static hu.progmasters.config.DatabaseConfig.*;
+import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class BlockRepository {
     Connection connection;
