@@ -3,7 +3,7 @@ package hu.progmasters;
 import java.sql.*;
 import java.util.Scanner;
 
-import static hu.progmasters.config.DatabaseConfig.*;
+import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class BlockGenerator {
     public static void main(String[] args) {
@@ -12,20 +12,18 @@ public class BlockGenerator {
 //        createShop();
         updateShop();
 
-////        try (Scanner scanner = new Scanner(System.in)) {
-////            giveShopInfo();
-////
-////            System.out.println("Which shop do you want to modify? (Enter its ID");
-////            System.out.println("Shop's ID:");
-////            int shopID = scanner.nextInt();
-////            scanner.nextLine();
-////            System.out.println("Which field would you like to modify?");
-////            String shopField = scanner.nextLine();
-////            System.out.println("What is the new value?");
-////            String shopValue = scanner.nextLine();
-////
-////            updateShop(shopValue, shopID);
-////        }
+       /*
+       System.out.println("Press number for choose between options");
+        System.out.println("1: Create new Plane and save to database"); //Create new Product and save to database
+        System.out.println("2: Search Plane by id"); //Search Product by id
+        System.out.println("3: Print all Plane data"); //Print all Product data"
+        System.out.println("4: Create new City and save to database"); //Create new Shop and save to database"
+        System.out.println("5: Search City by id"); //Search Shop by id"
+        System.out.println("6: Print all City data"); //Print all Shop data
+        System.out.println("7: Create new flight"); //Create new blokk
+        System.out.println("8: Search Flight by id"); //Search blokk by id
+        System.out.println("9: Quit");
+        */
 
     }
 
