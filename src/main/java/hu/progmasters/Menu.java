@@ -40,8 +40,15 @@ public class Menu {
             int userInput = ui.askIntFromUser();
             switch (userInput) {
                 case 1:
-                    String newProductInfo = productRepository.createNewProduct(new Product(ui.askIntFromUser(),
-                            ui.askTextFromUser(), ui.askIntFromUser()));
+                    System.out.println("Id of product: ");
+                    int productId = ui.askIntFromUser();
+                    System.out.println("Name of product: ");
+                    String productName = ui.askTextFromUser();
+                    System.out.println("Price of product: ");
+                    double productPrice = ui.askDoubleFromUser();
+                    System.out.println("Amount of prdouct:");
+                    double productAmount = ui.askDoubleFromUser();
+                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName, productPrice, productAmount));
                     System.out.println(newProductInfo);
                     break;
                 case 2:
