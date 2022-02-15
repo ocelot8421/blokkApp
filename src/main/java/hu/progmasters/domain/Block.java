@@ -7,9 +7,9 @@ public class Block {
 
     private int id;
     private Shop shop;
-    private Product product;
     private double amount;
     private LocalDate date;
+    private Product product;
 
     public Block(int id, Shop shop, double amount, LocalDate date, Product product) {
         this.id = id;

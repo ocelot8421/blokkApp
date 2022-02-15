@@ -1,6 +1,8 @@
 package hu.progmasters.repository;
 
+import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Block;
+import hu.progmasters.domain.Product;
 import hu.progmasters.domain.Shop;
 
 import java.sql.*;
@@ -71,4 +73,37 @@ public class BlockRepository {
         }
         return block;
     }
+
+    public Block searchBlockById(int id) {
+
+        Block block = null;
+        String sql = "SELECT * FROM block b " +
+                "JOIN shop s ON s.id = shop_id" +
+                "JOIN product p ON p.id = product_id" +
+                "WHERE b.id = ? ";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                block = new Block(
+                        resultSet.getInt("id"),
+                        new Shop(resultSet.getInt("shop_id"),
+                                resultSet.getString("franchise"),
+                                (Address) resultSet.getObject("address")),
+                        resultSet.getDouble("amount"),
+                        resultSet.getDate("date").toLocalDate(),
+                        new Product(resultSet.getInt("product_id"),
+                                resultSet.getString("name"),
+                                resultSet.getDouble("price"),
+                                resultSet.getDouble("amount")));
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return block;
+    }
 }
+
