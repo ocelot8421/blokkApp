@@ -69,15 +69,13 @@ public class Menu {
                     System.out.println(shops);
                     break;
                 case 7:
-                    Product productForBlock = productRepository.searchProductById(ui.askIntFromUser());
-                    Shop startShopForBlock = shopRepository.searchShopById(ui.askIntFromUser());
-                    Shop endShopForBlock = shopRepository.searchShopById(ui.askIntFromUser());
-                    String result = blockRepository.createNewBlock(new Block(ui.askIntFromUser(), productForBlock,
-                            startShopForBlock, endShopForBlock));
+                    Product product1 = productRepository.searchProductById(ui.askIntFromUser());
+                    Shop shop1 = shopRepository.searchShopById(ui.askIntFromUser());
+                    String result = blockRepository.createNewBlockTestHajni(new Block(ui.askIntFromUser(), shop1, product1, ui.askDoubleFromUser()));
                     System.out.println(result);
                     break;
                 case 8:
-                    Block block = blockRepository.searchBlockById(ui.askIntFromUser());
+                    Block block = blockRepository.searchBlockByIdTestHajni(ui.askIntFromUser());
                     System.out.println(block);
                     break;
                 case 9:
