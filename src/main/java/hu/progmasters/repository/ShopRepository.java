@@ -4,6 +4,8 @@ import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static hu.progmasters.config.DatabaseConfig.*;
@@ -26,7 +28,7 @@ public class ShopRepository {
         String createTable = "CREATE TABLE IF NOT EXISTS shops" +
                     "(ID INT PRIMARY KEY, " +
                     "name VARCHAR(50), " +
-                    "city VARCHAR(50), " +
+                    "shop VARCHAR(50), " +
                     "street VARCHAR(50) " +
                     "); ";
            try (Statement statement = connection.createStatement()) {
@@ -37,8 +39,8 @@ public class ShopRepository {
         }
     }
 
-    public void createNewShop(Shop shop) {
-
+    public String createNewShop(Shop shop) {
+        String infoBack = "Shop can not be created";
         String insertShopStatement = "INSERT INTO shop VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertShopStatement)) {
             preparedStatement.setInt(1, shop.getId());
@@ -47,10 +49,11 @@ public class ShopRepository {
 
             preparedStatement.executeUpdate();
             System.out.println("Shop created");
-
+            infoBack = "Shop created";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return infoBack;
     }
 
     public Shop searchShopByName (String franchise) {
@@ -61,7 +64,7 @@ public class ShopRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                Address address = new Address(resultSet.getString("city"), resultSet.getString("street"));
+                Address address = new Address(resultSet.getString("shop"), resultSet.getString("street"));
                 shop = new Shop(
                         resultSet.getInt("id"),
                         resultSet.getString("franchise"),
@@ -128,5 +131,57 @@ public class ShopRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Shop searchShopById(int id) {
+        Shop shop = null;
+        String sql = "SELECT id, name, longitude, latitude  FROM shop WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Address address;
+            if (resultSet.next()) {
+                address = new Address(
+                        resultSet.getInt("id"),
+                        resultSet.getString("city"),
+                        resultSet.getString("street")
+                );
+                shop = new Shop(
+                        resultSet.getInt("id"),
+                        resultSet.getString("franchise"),
+                        address
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return shop;
+    }
+
+    public List<Shop> printOutAllShopDetails() {
+        List<Shop> shops = new ArrayList<>();
+        String sql = "SELECT * FROM city";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Address address;
+            while (resultSet.next()) {
+                address = new Address(
+                        resultSet.getInt("id"),
+                        resultSet.getString("city"),
+                        resultSet.getString("street")
+                );
+                shops.add(new Shop(
+                        resultSet.getInt("id"),
+                        resultSet.getString("franchise"),
+                        address
+                ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return shops;
     }
 }

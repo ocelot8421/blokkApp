@@ -6,6 +6,12 @@ import java.util.Scanner;
 import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class BlockGenerator {
+
+    public static final String DB_URL =
+            "jdbc:mysql://localhost:3306/blokk_app_local?useSSL=false&serverTimezone=UTC";
+    public static final String USER = "root";
+    public static final String PASSWORD = "Test123!";
+
     public static void main(String[] args) {
 
         createShopTable();

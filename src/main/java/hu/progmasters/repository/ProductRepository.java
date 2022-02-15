@@ -87,6 +87,28 @@ public class ProductRepository {
         }
         return product;
     }
+
+    public List<Product> printOutAllProductDetails() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                products.add(new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("price")
+                ));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return products;
+    }
 }
 
 
