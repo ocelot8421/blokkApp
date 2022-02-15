@@ -41,10 +41,9 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop{" +
-                "id=" + id +
-                ", franchise='" + franchise + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "\n Shop: " +
+                "id: " + id + ", " +
+                "name: " + franchise + ", " +
+                "address: " + address;
     }
 }

@@ -28,7 +28,7 @@ public class BlockRepository {
                 "amount DOUBLE NOT NULL," +
                 "date DATE NOT NULL, " +
                 "FOREIGN KEY (shop_id) REFERENCES shop(id), " +
-                "FOREIGN KEY (product_id) REFERENCES product(id), " +
+                "FOREIGN KEY (product_id) REFERENCES product(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);

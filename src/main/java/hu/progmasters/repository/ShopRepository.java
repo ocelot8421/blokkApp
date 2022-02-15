@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static hu.progmasters.config.DatabaseConfig.*;
+import static hu.progmasters.repository.DataBaseConfig.*;
 
 public class ShopRepository {
 
@@ -25,10 +25,10 @@ public class ShopRepository {
 
     public void createShopTable() {
 
-        String createTable = "CREATE TABLE IF NOT EXISTS shops" +
+        String createTable = "CREATE TABLE IF NOT EXISTS shop" +
                     "(ID INT PRIMARY KEY, " +
                     "name VARCHAR(50), " +
-                    "shop VARCHAR(50), " +
+                    "city VARCHAR(50), " +
                     "street VARCHAR(50) " +
                     "); ";
            try (Statement statement = connection.createStatement()) {
@@ -41,16 +41,19 @@ public class ShopRepository {
 
     public String createNewShop(Shop shop) {
         String infoBack = "Shop can not be created";
-        String insertShopStatement = "INSERT INTO shop VALUES (?,?,?)";
+        String insertShopStatement = "INSERT INTO shops VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertShopStatement)) {
             preparedStatement.setInt(1, shop.getId());
             preparedStatement.setString(2, shop.getFranchise());
-            preparedStatement.setObject(3, shop.getAddress());
-
+            preparedStatement.setString(3, shop.getAddress().getCity());
+            preparedStatement.setString(4, shop.getAddress().getStreet());
             preparedStatement.executeUpdate();
-            System.out.println("Shop created");
+//            System.out.println("Shop created");
             infoBack = "Shop created";
         } catch (SQLException throwables) {
+            System.out.println("This id has been used for a shop. PLease, chose another.");
+            //TODO van egy shop meg egy shops táblázat is - Hajni
+            //TODO utolsó id-t kiiratni - Hajni
             throwables.printStackTrace();
         }
         return infoBack;
@@ -58,7 +61,7 @@ public class ShopRepository {
 
     public Shop searchShopByName (String franchise) {
         Shop shop = null;
-        String sql = "SELECT id, franchise, address FROM shops WHERE franchise = ?";
+        String sql = "SELECT id, name, address FROM shop WHERE name = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(2, franchise);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -67,7 +70,7 @@ public class ShopRepository {
                 Address address = new Address(resultSet.getString("shop"), resultSet.getString("street"));
                 shop = new Shop(
                         resultSet.getInt("id"),
-                        resultSet.getString("franchise"),
+                        resultSet.getString("name"),
                         address
                 );
             }
@@ -94,7 +97,7 @@ public class ShopRepository {
             String shopValue = scanner.nextLine();
 
             String updateShop =
-                    "UPDATE shops SET " + shopFiled + " = '" + shopValue + "' " +
+                    "UPDATE shop SET " + shopFiled + " = '" + shopValue + "' " +
                             "WHERE id = " + shopID + ";";
 
             statement.execute("SET sql_safe_updates = 0");
@@ -125,7 +128,7 @@ public class ShopRepository {
                 for (int i = 1; i <= columnsNumber; i++) {
                     System.out.print(" -- " + resultSet.getObject(i));
                 }
-                System.out.println(" utca");
+                System.out.println(" út/utca");
             }
 
         } catch (SQLException e) {
@@ -135,7 +138,7 @@ public class ShopRepository {
 
     public Shop searchShopById(int id) {
         Shop shop = null;
-        String sql = "SELECT id, name, longitude, latitude  FROM shop WHERE id = ?";
+        String sql = "SELECT id, name, city, street  FROM shops WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -149,7 +152,7 @@ public class ShopRepository {
                 );
                 shop = new Shop(
                         resultSet.getInt("id"),
-                        resultSet.getString("franchise"),
+                        resultSet.getString("name"),
                         address
                 );
             }
@@ -161,7 +164,7 @@ public class ShopRepository {
 
     public List<Shop> printOutAllShopDetails() {
         List<Shop> shops = new ArrayList<>();
-        String sql = "SELECT * FROM city";
+        String sql = "SELECT * FROM shops";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -175,7 +178,7 @@ public class ShopRepository {
                 );
                 shops.add(new Shop(
                         resultSet.getInt("id"),
-                        resultSet.getString("franchise"),
+                        resultSet.getString("name"),
                         address
                 ));
             }
