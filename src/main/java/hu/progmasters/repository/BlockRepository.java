@@ -59,13 +59,27 @@ public class BlockRepository {
 
     public Block searchBlockByShop(Shop shop) {
         Block block = null;
-        String sql = "SELECT * FROM block";
+        String sql = "SELECT * FROM block" +
+                "JOIN shop s ON s.id = shop_id" +
+                "JOIN product p ON p.id = product_id" +
+                "WHERE s.franchise = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, shop.getId());
+            preparedStatement.setString(1, shop.getFranchise());
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
+                block = new Block(
+                        resultSet.getInt("id"),
+                        new Shop(resultSet.getInt("shop_id"),
+                                resultSet.getString("franchise"),
+                                (Address) resultSet.getObject("address")),
+                        resultSet.getDouble("amount"),
+                        resultSet.getDate("date").toLocalDate(),
+                        new Product(resultSet.getInt("product_id"),
+                                resultSet.getString("name"),
+                                resultSet.getDouble("price"),
+                                resultSet.getDouble("amount")));
 
             }
         } catch (SQLException throwables) {
