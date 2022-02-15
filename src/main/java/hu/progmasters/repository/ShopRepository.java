@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static hu.progmasters.repository.DataBaseConfig.*;
+import static hu.progmasters.config.DatabaseConfig.*;
 
 public class ShopRepository {
 
@@ -77,7 +77,7 @@ public class ShopRepository {
         return shop;
     }
 
-    public static void updateShop() {
+    private static void updateShop() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD); Scanner scanner = new Scanner(System.in)) {
             Statement statement = connection.createStatement();
 
@@ -125,7 +125,7 @@ public class ShopRepository {
                 for (int i = 1; i <= columnsNumber; i++) {
                     System.out.print(" -- " + resultSet.getObject(i));
                 }
-                System.out.println(" út/utca");
+                System.out.println(" utca");
             }
 
         } catch (SQLException e) {
