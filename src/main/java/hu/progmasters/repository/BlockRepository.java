@@ -30,7 +30,7 @@ public class BlockRepository {
                 "amount DOUBLE NOT NULL," +
                 "date DATE NOT NULL, " +
                 "FOREIGN KEY (shop_id) REFERENCES shop(id), " +
-                "FOREIGN KEY (product_id) REFERENCES product(id), " +
+                "FOREIGN KEY (product_id) REFERENCES product(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
@@ -118,6 +118,28 @@ public class BlockRepository {
             throwables.printStackTrace();
         }
         return block;
+    }
+
+    public String createNewBlockTestHajni(Block block) {
+        String infoBack = "Block can not be created";
+        String insertFlightStatement = "INSERT INTO blokk VALUES (?,?,?,?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
+            preparedStatement.setInt(1, block.getId());
+            preparedStatement.setInt(2, block.getShop().getId());
+            preparedStatement.setDouble(3, block.getAmount());
+            preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
+            preparedStatement.executeUpdate();
+            infoBack = "Block created";
+        } catch (
+                SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return infoBack;
+    }
+
+    public Block searchBlockByIdTestHajni(int askIntFromUser) {
+        System.out.println("Fejlesztés alatt");
+        return null;
     }
 }
 
