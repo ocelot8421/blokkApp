@@ -87,10 +87,23 @@ public class Menu {
                     System.out.println(shops);
                     break;
                 case 7:
-                    System.out.println("");
-                    Product product1 = productRepository.searchProductById(ui.askIntFromUser());
-                    Shop shop1 = shopRepository.searchShopById(ui.askIntFromUser());
-                    String result = blockRepository.createNewBlock(new Block(ui.askIntFromUser(), shop1, product1, ui.askDoubleFromUser(), LocalDate.of(2022,02,01)));
+                    System.out.println("Id of block");
+                    int blockId = ui.askIntFromUser();
+                    System.out.println("Id of shop");
+                    int shopId = ui.askIntFromUser();
+                    System.out.println("Id of product");
+                    int productId1 = ui.askIntFromUser();
+                    System.out.println("Final amount: "); //TODO számold össze!!
+                    double finalAmount = ui.askDoubleFromUser();
+                    System.out.println("Block year: ");
+                    int blockYear = ui.askIntFromUser();
+                    System.out.println("Block month: ");
+                    int blockMonth = ui.askIntFromUser();
+                    System.out.println("Block day: ");
+                    int blockDay = ui.askIntFromUser();
+                    Product product1 = productRepository.searchProductById(productId1);
+                    Shop shop1 = shopRepository.searchShopById(shopId);
+                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, product1, finalAmount, LocalDate.of(blockYear,blockMonth,blockDay)));
                     System.out.println(result);
                     break;
                 case 8:

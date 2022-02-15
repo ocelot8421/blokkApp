@@ -60,9 +60,9 @@ public class BlockRepository {
 
     public Block searchBlockByShop(Shop shop) {
         Block block = null;
-        String sql = "SELECT * FROM block" +
-                "JOIN shop s ON s.id = shop_id" +
-                "JOIN product p ON p.id = product_id" +
+        String sql = "SELECT * FROM blokk_app.block b \n" +
+                "JOIN shop s ON s.id = b.shop_id\n" +
+                "JOIN product p ON p.id = b.product_id" +
                 "WHERE s.franchise = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, shop.getFranchise());
@@ -93,10 +93,10 @@ public class BlockRepository {
     public Block searchBlockById(int id) {
 
         Block block = null;
-        String sql = "SELECT * FROM block b " +
-                "JOIN shop s ON s.id = shop_id" +
-                "JOIN product p ON p.id = product_id " +
-                "WHERE b.id = ? ";
+        String sql = "SELECT * FROM blokk_app.block b \n" +
+                "JOIN shop s ON s.id = b.shop_id\n" +
+                "JOIN product p ON p.id = b.product_id" +
+                "WHERE id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
