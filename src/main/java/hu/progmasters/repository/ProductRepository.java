@@ -35,6 +35,7 @@ public class ProductRepository {
 
     //TODO updateProductTable
 
+
     public String createNewProduct(Product product) {
         String infoBack = "Product can not be created";
         String insertCityStatement = "INSERT INTO product VALUES (?,?,?,?)";

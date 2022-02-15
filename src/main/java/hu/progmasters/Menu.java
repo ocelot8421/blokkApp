@@ -1,5 +1,6 @@
 package hu.progmasters;
 
+import java.time.LocalDate;
 import java.util.List;
 import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
@@ -86,13 +87,14 @@ public class Menu {
                     System.out.println(shops);
                     break;
                 case 7:
+                    System.out.println("");
                     Product product1 = productRepository.searchProductById(ui.askIntFromUser());
                     Shop shop1 = shopRepository.searchShopById(ui.askIntFromUser());
-                    String result = blockRepository.createNewBlockTestHajni(new Block(ui.askIntFromUser(), shop1, product1, ui.askDoubleFromUser()));
+                    String result = blockRepository.createNewBlock(new Block(ui.askIntFromUser(), shop1, product1, ui.askDoubleFromUser(), LocalDate.of(2022,02,01)));
                     System.out.println(result);
                     break;
                 case 8:
-                    Block block = blockRepository.searchBlockByIdTestHajni(ui.askIntFromUser());
+                    Block block = blockRepository.searchBlockById(ui.askIntFromUser());
                     System.out.println(block);
                     break;
                 case 9:

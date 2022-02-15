@@ -11,14 +11,8 @@ public class Block {
     private LocalDate date;
     private Product product;
 
-    public Block(int id, Shop shop, Product product, double amount) {
-        this.id = id;
-        this.shop = shop;
-        this.product = product;
-        this.amount = amount;
-    }
 
-    public Block(int id, Shop shop, double amount, LocalDate date, Product product) {
+    public Block(int id, Shop shop, Product product, double amount, LocalDate date) {
         this.id = id;
         this.shop = shop;
         this.amount = amount;

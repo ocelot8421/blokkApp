@@ -42,12 +42,13 @@ public class BlockRepository {
 
     public String createNewBlock(Block block) {
         String infoBack = "Block can not be created";
-        String sql = "INSERT INTO block VALUES (?,?,?,?)";
+        String sql = "INSERT INTO block VALUES (?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setDouble(3, block.getAmount());
-            preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
+            preparedStatement.setInt(3, block.getProduct().getId());
+            preparedStatement.setDouble(4, block.getAmount());
+            preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";
         } catch (
@@ -74,12 +75,13 @@ public class BlockRepository {
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-                        resultSet.getDouble("amount"),
-                        resultSet.getDate("date").toLocalDate(),
+
                         new Product(resultSet.getInt("product_id"),
                                 resultSet.getString("name"),
                                 resultSet.getDouble("price"),
-                                resultSet.getDouble("amount")));
+                                resultSet.getDouble("amount")),
+                        resultSet.getDouble("amount"),
+                        resultSet.getDate("date").toLocalDate());
 
             }
         } catch (SQLException throwables) {
@@ -93,7 +95,7 @@ public class BlockRepository {
         Block block = null;
         String sql = "SELECT * FROM block b " +
                 "JOIN shop s ON s.id = shop_id" +
-                "JOIN product p ON p.id = product_id" +
+                "JOIN product p ON p.id = product_id " +
                 "WHERE b.id = ? ";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -106,12 +108,13 @@ public class BlockRepository {
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-                        resultSet.getDouble("amount"),
-                        resultSet.getDate("date").toLocalDate(),
+
                         new Product(resultSet.getInt("product_id"),
                                 resultSet.getString("name"),
                                 resultSet.getDouble("price"),
-                                resultSet.getDouble("amount")));
+                                resultSet.getDouble("amount")),
+                        resultSet.getDouble("amount"),
+                        resultSet.getDate("date").toLocalDate());
 
             }
         } catch (SQLException throwables) {
