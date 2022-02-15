@@ -5,6 +5,7 @@ public class Shop {
     private int id;
     private String franchise;
     private Address address;
+    //private KeyWord keyWord;
 
     public Shop(int id, String franchise, Address address) {
         this.id = id;

@@ -10,8 +10,6 @@ import hu.progmasters.repository.BlockRepository;
 import hu.progmasters.repository.ProductRepository;
 import hu.progmasters.ui.Ui;
 
-import java.util.List;
-
 public class Menu {
     ProductRepository productRepository = new ProductRepository();
     ShopRepository shopRepository = new ShopRepository();
@@ -43,7 +41,7 @@ public class Menu {
             switch (userInput) {
                 case 1:
                     String newProductInfo = productRepository.createNewProduct(new Product(ui.askIntFromUser(),
-                            ui.askTextFromUser(), ui.askIntFromUser()));
+                            ui.askTextFromUser(), ui.askIntFromUser(), resultSet.getDouble("amount")));
                     System.out.println(newProductInfo);
                     break;
                 case 2:
@@ -70,10 +68,8 @@ public class Menu {
                     break;
                 case 7:
                     Product productForBlock = productRepository.searchProductById(ui.askIntFromUser());
-                    Shop startShopForBlock = shopRepository.searchShopById(ui.askIntFromUser());
-                    Shop endShopForBlock = shopRepository.searchShopById(ui.askIntFromUser());
-                    String result = blockRepository.createNewBlock(new Block(ui.askIntFromUser(), productForBlock,
-                            startShopForBlock, endShopForBlock));
+                    Shop shopForBlock = shopRepository.searchShopById(ui.askIntFromUser());
+                    String result = blockRepository.createNewBlock(new Block(ui.askIntFromUser(), shopForBlock, productForBlock));
                     System.out.println(result);
                     break;
                 case 8:
