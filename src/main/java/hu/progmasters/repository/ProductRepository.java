@@ -3,7 +3,6 @@ package hu.progmasters.repository;
 import hu.progmasters.domain.Product;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter; //TODO
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class ProductRepository {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
                 "id INT NOT NULL PRIMARY KEY," +
                 "name VARCHAR(50) NOT NULL," +
-                "price DOUBLE NOT NULL" +
+                "price DOUBLE NOT NULL," +
+                "amount DOUBLE NOT NULL" +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
@@ -33,19 +33,23 @@ public class ProductRepository {
         }
     }
 
+    //TODO updateProductTable
+
 
     public String createNewProduct(Product product) {
         String infoBack = "Product can not be created";
-        String insertCityStatement = "INSERT INTO product VALUES (?,?,?)";
+        String insertCityStatement = "INSERT INTO product VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertCityStatement)) {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());
             preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setDouble(4, product.getAmount());
 
             preparedStatement.executeUpdate();
             infoBack = "Product created";
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println(" -- Exception: " + throwables.getMessage());
+//            throwables.printStackTrace();
         }
         return infoBack;
     }
@@ -59,7 +63,8 @@ public class ProductRepository {
                 products.add(new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("price")));
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +75,7 @@ public class ProductRepository {
 
     public Product searchProductById(int id) {
         Product product = null;
-        String sql = "SELECT id, name, price FROM product WHERE id = ?";
+        String sql = "SELECT id, name, price, amount FROM product WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -79,8 +84,8 @@ public class ProductRepository {
                 product = new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("price")
-                );
+                        resultSet.getInt("price"),
+                        resultSet.getDouble("amount"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -99,8 +104,8 @@ public class ProductRepository {
                 products.add(new Product(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("price")
-                ));
+                        resultSet.getInt("price"),
+                        resultSet.getDouble("amount")));
             }
 
         } catch (SQLException throwables) {

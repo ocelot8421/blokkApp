@@ -1,6 +1,8 @@
 package hu.progmasters;
 
+import java.time.LocalDate;
 import java.util.List;
+
 import hu.progmasters.domain.Address;
 import hu.progmasters.domain.Shop;
 import hu.progmasters.domain.Block;
@@ -40,19 +42,37 @@ public class Menu {
             int userInput = ui.askIntFromUser();
             switch (userInput) {
                 case 1:
-                    String newProductInfo = productRepository.createNewProduct(new Product(ui.askIntFromUser(),
-                            ui.askTextFromUser(), ui.askIntFromUser()));
+//                    case 3;
+                    List<Product> products = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
+                    System.out.println(products);
+                    System.out.println("Id of product: ");
+                    int productId = ui.askIntFromUser(); //TODO AUTO_INCREMENT-ET BEÁLLÍTANI (minden id-ra)
+                    System.out.println("Name of product: ");
+                    String productName = ui.askTextFromUser();
+                    System.out.println("Price of product: ");
+                    double productPrice = ui.askDoubleFromUser();
+                    System.out.println("Amount of product:");
+                    double productAmount = ui.askDoubleFromUser();
+                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName, productPrice, productAmount));
                     System.out.println(newProductInfo);
+//                case 3;
+                    List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
+                    System.out.println(products1);
+                    printMenu();
                     break;
                 case 2:
                     Product product = productRepository.searchProductById(ui.askIntFromUser());
                     System.out.println(product);
+                    printMenu();
                     break;
                 case 3:
-                    List<Product> products = productRepository.printOutAllProductDetails();
-                    System.out.println(products);
+                    List<Product> products3 = productRepository.printOutAllProductDetails();
+                    System.out.println(products3);
+                    printMenu();
                     break;
                 case 4:
+                    List<Shop> shops = shopRepository.printOutAllShopDetails();
+                    System.out.println(shops);
                     System.out.println("Name of the new shop:");
                     String name = ui.askTextFromUser();
                     System.out.println("ID of the new shop:");
@@ -62,11 +82,13 @@ public class Menu {
                     System.out.println("Street of the new shop's address:");
                     String street = ui.askTextFromUser();
                     System.out.println("ID of the new shop's address:");
-                    int addressID = ui.askIntFromUser();
+                    int addressID = ui.askIntFromUser(); //TODO kinyomtatni ezt is
                     Address address = new Address(addressID, city, street);
                     String newShopInfo = shopRepository.createNewShop(new Shop(shopID, name, address));
                     System.out.println(newShopInfo);
                     printMenu();
+                    List<Shop> shops4 = shopRepository.printOutAllShopDetails();
+                    System.out.println(shops4);
                     break;
                 case 5:
                     System.out.println("ID of the shop which you want to find:");
@@ -75,18 +97,35 @@ public class Menu {
                     printMenu();
                     break;
                 case 6:
-                    List<Shop> shops = shopRepository.printOutAllShopDetails();
-                    System.out.println(shops);
+                    List<Shop> shops11 = shopRepository.printOutAllShopDetails(); //TODO ne legyen ennyi változó (shopsXY)
+                    System.out.println(shops11);
+                    printMenu();
                     break;
                 case 7:
-                    Product product1 = productRepository.searchProductById(ui.askIntFromUser());
-                    Shop shop1 = shopRepository.searchShopById(ui.askIntFromUser());
-                    String result = blockRepository.createNewBlockTestHajni(new Block(ui.askIntFromUser(), shop1, product1, ui.askDoubleFromUser()));
+                    System.out.println("Id of block");
+                    int blockId = ui.askIntFromUser();
+                    System.out.println("Id of shop");
+                    int shopId = ui.askIntFromUser();
+                    System.out.println("Id of product");
+                    int productId1 = ui.askIntFromUser();
+                    System.out.println("Final amount: "); //TODO számold össze!!
+                    double finalAmount = ui.askDoubleFromUser();
+                    System.out.println("Block year: ");
+                    int blockYear = ui.askIntFromUser();
+                    System.out.println("Block month: ");
+                    int blockMonth = ui.askIntFromUser();
+                    System.out.println("Block day: ");
+                    int blockDay = ui.askIntFromUser();
+                    Product product1 = productRepository.searchProductById(productId1);
+                    Shop shop1 = shopRepository.searchShopById(shopId);
+                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, product1, finalAmount, LocalDate.of(blockYear, blockMonth, blockDay)));
                     System.out.println(result);
+                    printMenu();
                     break;
                 case 8:
-                    Block block = blockRepository.searchBlockByIdTestHajni(ui.askIntFromUser());
+                    Block block = blockRepository.searchBlockById(ui.askIntFromUser()); //TODO BLOKKLEKÉRÉST MEGCSINÁLNI....
                     System.out.println(block);
+                    printMenu();
                     break;
                 case 9:
                     flag = false;

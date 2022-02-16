@@ -7,18 +7,12 @@ public class Block {
 
     private int id;
     private Shop shop;
-    private Product product;
     private double amount;
     private LocalDate date;
+    private Product product;
 
-    public Block(int id, Shop shop, Product product, double amount) {
-        this.id = id;
-        this.shop = shop;
-        this.product = product;
-        this.amount = amount;
-    }
 
-    public Block(int id, Shop shop, double amount, LocalDate date, Product product) {
+    public Block(int id, Shop shop, Product product, double amount, LocalDate date) {
         this.id = id;
         this.shop = shop;
         this.amount = amount;
@@ -44,5 +38,16 @@ public class Block {
 
     public Product getProduct() {
         return product;
+    }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "id=" + id +
+                ", shop=" + shop +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", product=" + product +
+                '}';
     }
 }
