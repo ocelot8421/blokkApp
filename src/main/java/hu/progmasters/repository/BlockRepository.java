@@ -40,8 +40,8 @@ public class BlockRepository {
 
     public String createNewBlock(Block block) {
         String infoBack = "Block can not be created";
-        String insertFlightStatement = "INSERT INTO flight VALUES (?,?,?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
+        String sql = "INSERT INTO block VALUES (?,?,?,?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
             preparedStatement.setDouble(3, block.getAmount());
