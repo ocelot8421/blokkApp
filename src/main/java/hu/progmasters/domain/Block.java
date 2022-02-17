@@ -1,6 +1,7 @@
 package hu.progmasters.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Block {
@@ -9,15 +10,16 @@ public class Block {
     private Shop shop;
     private double amount;
     private LocalDate date;
-    private Product product;
+//    private Product product;
+    private ProductList productList;
 
 
-    public Block(int id, Shop shop, Product product, double amount, LocalDate date) {
+    public Block(int id, Shop shop, ProductList productList, double amount, LocalDate date) {
         this.id = id;
         this.shop = shop;
         this.amount = amount;
         this.date = date;
-        this.product = product;
+        this.productList = productList;
     }
 
     public int getId() {
@@ -36,8 +38,8 @@ public class Block {
         return date;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductList getProductList() {
+        return productList;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class Block {
                 ", shop=" + shop +
                 ", amount=" + amount +
                 ", date=" + date +
-                ", product=" + product +
+                ", product=" + productList +
                 '}';
     }
 }

@@ -1,12 +1,11 @@
 package hu.progmasters.repository;
 
-import hu.progmasters.domain.Address;
-import hu.progmasters.domain.Block;
-import hu.progmasters.domain.Product;
-import hu.progmasters.domain.Shop;
+import hu.progmasters.domain.*;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static hu.progmasters.repository.DataBaseConfig.*;
 
@@ -46,14 +45,14 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setInt(3, block.getProduct().getId());
+            preparedStatement.setInt(3, block.getProductList().getId());
             preparedStatement.setDouble(4, block.getAmount());
             preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (NullPointerException ne){
+        } catch (NullPointerException ne) {
             System.out.println("Product doesn't exist with this ID.");
         }
         return infoBack;
@@ -70,17 +69,19 @@ public class BlockRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-
+                ProductList productList = new ProductList();
+                List<Product> products = new ArrayList<>();
+                productList.setProductList(products);
+                products.add(new Product(resultSet.getInt("product_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount")));
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-
-                        new Product(resultSet.getInt("product_id"),
-                                resultSet.getString("name"),
-                                resultSet.getDouble("price"),
-                                resultSet.getDouble("amount")),
+                        productList,
                         resultSet.getDouble("amount"),
                         resultSet.getDate("date").toLocalDate());
 
@@ -104,16 +105,17 @@ public class BlockRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                List<Product> productList = new ArrayList<>();
+                productList.add(new Product(resultSet.getInt("product_id"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount")));
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-
-                        new Product(resultSet.getInt("product_id"),
-                                resultSet.getString("name"),
-                                resultSet.getDouble("price"),
-                                resultSet.getDouble("amount")),
+                        productList,
                         resultSet.getDouble("amount"),
                         resultSet.getDate("date").toLocalDate());
 
