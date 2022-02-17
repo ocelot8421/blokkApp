@@ -51,9 +51,10 @@ public class BlockRepository {
             preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";
-        } catch (
-                SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (NullPointerException ne){
+            System.out.println("Product doesn't exist with this ID.");
         }
         return infoBack;
     }

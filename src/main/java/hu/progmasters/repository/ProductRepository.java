@@ -48,7 +48,8 @@ public class ProductRepository {
             preparedStatement.executeUpdate();
             infoBack = "Product created";
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println(" -- Exception: " + throwables.getMessage());
+//            throwables.printStackTrace();
         }
         return infoBack;
     }

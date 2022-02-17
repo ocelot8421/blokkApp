@@ -39,4 +39,15 @@ public class Block {
     public Product getProduct() {
         return product;
     }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "id=" + id +
+                ", shop=" + shop +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", product=" + product +
+                '}';
+    }
 }

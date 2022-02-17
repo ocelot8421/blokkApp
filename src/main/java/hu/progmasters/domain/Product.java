@@ -4,7 +4,7 @@ public class Product {
 
     private int id;
     private String name;
-    private double price;
+    private double price; //TODO az ár függ a helytől és időtől is - blokknak lesz a példányváltozója
     private double amount;
     // private Category category;
 
@@ -33,11 +33,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                '}';
+        return "\n" + id + " | " + name + " | " + price + " | " + amount;
     }
 }
