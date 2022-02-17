@@ -14,12 +14,13 @@ public class Block {
     private ProductList productList;
 
 
-    public Block(int id, Shop shop, ProductList productList, double amount, LocalDate date) {
+    public Block(int id, Shop shop, ProductList pl, double amount, LocalDate date) {
         this.id = id;
         this.shop = shop;
         this.amount = amount;
         this.date = date;
-        this.productList = productList;
+//        this.product = product;
+        this.productList = pl;
     }
 
     public int getId() {

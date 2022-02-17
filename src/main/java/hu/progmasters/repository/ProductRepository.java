@@ -46,7 +46,7 @@ public class ProductRepository {
             preparedStatement.setDouble(4, product.getAmount());
 
             preparedStatement.executeUpdate();
-            infoBack = "Product created";
+            infoBack = "Product is created";
         } catch (SQLException throwables) {
             System.out.println(" -- Exception: " + throwables.getMessage());
 //            throwables.printStackTrace();
@@ -114,6 +114,8 @@ public class ProductRepository {
 
         return products;
     }
+
+
 }
 
 

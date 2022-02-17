@@ -1,9 +1,14 @@
 package hu.progmasters.repository;
 
+import hu.progmasters.domain.Block;
+import hu.progmasters.domain.Product;
 import hu.progmasters.domain.ProductList;
+import hu.progmasters.domain.Shop;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static hu.progmasters.repository.DataBaseConfig.*;
 
@@ -37,18 +42,27 @@ public class ProductListRepository {
         }
     }
 
-    public String createNewProductList(ProductList productList){
-        String infoBack =  "ProductList can not be created";
-        String insertProductListStatement = "INSERT INTO product VALUES (?,?,?)";
+    public String createNewProductList(ProductList productList) {
+        String infoBack = "ProductList can not be created";
+        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductListStatement)) {
-            preparedStatement.setInt(1, productList.getId());
-            preparedStatement.setInt(2, productList.getId());
-            preparedStatement.setInt(3, productList.getId());
+            preparedStatement.setInt(1, productList.getIdList());
+            preparedStatement.setInt(2,productList.getIdProduct());
+            preparedStatement.setInt(3, productList.getIdBlokk());
+
+            preparedStatement.executeUpdate();
+            infoBack = "Productlist is created";
         } catch (SQLException e) {
             System.out.println(" -- Exception: " + e.getMessage());
+            e.printStackTrace();
 
         }
+        return infoBack;
     }
 
-
+//    public List<Product> addProduct (Product product) {
+//        Scanner scanner = new Scanner(System.in);
+//        int productId = scanner.nextInt();
+//
+//    }
 }

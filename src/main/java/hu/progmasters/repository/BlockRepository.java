@@ -45,7 +45,7 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setInt(3, block.getProductList().getId());
+            preparedStatement.setInt(3, block.getProductList().getIdList());
             preparedStatement.setDouble(4, block.getAmount());
             preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
@@ -71,11 +71,11 @@ public class BlockRepository {
             while (resultSet.next()) {
                 ProductList productList = new ProductList();
                 List<Product> products = new ArrayList<>();
-                productList.setProductList(products);
-                products.add(new Product(resultSet.getInt("product_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getDouble("amount")));
+//                productList.setProductList(products);
+//                products.add(new Product(resultSet.getInt("product_id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getDouble("price"),
+//                        resultSet.getDouble("amount")));
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
@@ -105,11 +105,11 @@ public class BlockRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                List<Product> productList = new ArrayList<>();
-                productList.add(new Product(resultSet.getInt("product_id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getDouble("amount")));
+                ProductList productList = new ProductList();
+//                productList.add(new Product(resultSet.getInt("product_id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getDouble("price"),
+//                        resultSet.getDouble("amount")));
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
