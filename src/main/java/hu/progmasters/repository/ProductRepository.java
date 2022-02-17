@@ -38,8 +38,8 @@ public class ProductRepository {
 
     public String createNewProduct(Product product) {
         String infoBack = "Product can not be created";
-        String insertCityStatement = "INSERT INTO product VALUES (?,?,?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertCityStatement)) {
+        String insertProductStatement = "INSERT INTO product VALUES (?,?,?,?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());
             preparedStatement.setDouble(3, product.getPrice());

@@ -3,10 +3,8 @@ package hu.progmasters;
 import java.time.LocalDate;
 import java.util.List;
 
-import hu.progmasters.domain.Address;
-import hu.progmasters.domain.Shop;
-import hu.progmasters.domain.Block;
-import hu.progmasters.domain.Product;
+import hu.progmasters.domain.*;
+import hu.progmasters.repository.ProductListRepository;
 import hu.progmasters.repository.ShopRepository;
 import hu.progmasters.repository.BlockRepository;
 import hu.progmasters.repository.ProductRepository;
@@ -16,6 +14,7 @@ public class Menu {
     ProductRepository productRepository = new ProductRepository();
     ShopRepository shopRepository = new ShopRepository();
     BlockRepository blockRepository = new BlockRepository();
+    ProductListRepository productListRepository = new ProductListRepository();
     Ui ui = new Ui();
 
     public void printMenu() {
@@ -145,6 +144,8 @@ public class Menu {
                     printMenu();
                     break;
                 case 9:
+                    ProductList productList = productListRepository.createProductListTable();
+                case 10:
                     flag = false;
             }
         }
