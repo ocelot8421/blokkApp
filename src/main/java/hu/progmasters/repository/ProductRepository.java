@@ -23,8 +23,6 @@ public class ProductRepository {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
                 "id INT NOT NULL PRIMARY KEY," +
                 "name VARCHAR(50) NOT NULL," +
-                "price DOUBLE NOT NULL," +
-                "amount DOUBLE NOT NULL" +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
@@ -34,6 +32,15 @@ public class ProductRepository {
     }
 
     //TODO updateProductTable
+    public void updateTable () {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String update = "ALTER TABLE productList MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT";
+            PreparedStatement preparedStatement = connection.prepareStatement(update);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public String createNewProduct(Product product) {
@@ -42,8 +49,6 @@ public class ProductRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());
-            preparedStatement.setDouble(3, product.getPrice());
-            preparedStatement.setDouble(4, product.getAmount());
 
             preparedStatement.executeUpdate();
             infoBack = "Product is created";
@@ -62,9 +67,7 @@ public class ProductRepository {
             while (resultSet.next()) {
                 products.add(new Product(
                         resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getDouble("amount")));
+                        resultSet.getString("name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,9 +86,7 @@ public class ProductRepository {
             if (resultSet.next()) {
                 product = new Product(
                         resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getDouble("amount"));
+                        resultSet.getString("name"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -103,9 +104,7 @@ public class ProductRepository {
             while (resultSet.next()) {
                 products.add(new Product(
                         resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("price"),
-                        resultSet.getDouble("amount")));
+                        resultSet.getString("name")));
             }
 
         } catch (SQLException throwables) {

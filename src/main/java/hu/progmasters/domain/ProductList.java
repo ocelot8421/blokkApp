@@ -11,6 +11,8 @@ public class ProductList {
     private int idList;
     private int idProduct;
     private int idBlokk;
+    private double price;
+    private double amount;
 
     public ProductList() {
     }
@@ -23,6 +25,21 @@ public class ProductList {
 
     public ProductList(int idList, int idProduct, int idBlokk) {
 
+    }
+
+    public ProductList(int idProduct, int idBlokk, double price, double amount) {
+        this.idProduct = idProduct;
+        this.idBlokk = idBlokk;
+        this.price = price;
+        this.amount = amount;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 
     public int getIdList() {

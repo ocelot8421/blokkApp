@@ -25,16 +25,23 @@ public class BlockRepository {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS block (" +
                 "id INT NOT NULL PRIMARY KEY," +
                 "shop_id INT NOT NULL," +
-                "product_id INT NOT NULL," +
-                "amount DOUBLE NOT NULL," +
                 "date DATE NOT NULL, " +
                 "FOREIGN KEY (shop_id) REFERENCES shop(id), " +
-                "FOREIGN KEY (product_id) REFERENCES product(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void updateTable () {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String update = "ALTER TABLE block MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT";
+            PreparedStatement preparedStatement = connection.prepareStatement(update);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -45,8 +52,7 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setInt(3, block.getProductList().getIdList());
-            preparedStatement.setDouble(4, block.getAmount());
+       //     preparedStatement.setInt(3, block.getProductList().getIdList());
             preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";
@@ -81,8 +87,6 @@ public class BlockRepository {
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-                        productList,
-                        resultSet.getDouble("amount"),
                         resultSet.getDate("date").toLocalDate());
 
             }
@@ -115,8 +119,6 @@ public class BlockRepository {
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("franchise"),
                                 (Address) resultSet.getObject("address")),
-                        productList,
-                        resultSet.getDouble("amount"),
                         resultSet.getDate("date").toLocalDate());
 
             }
@@ -132,7 +134,6 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setDouble(3, block.getAmount());
             preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";

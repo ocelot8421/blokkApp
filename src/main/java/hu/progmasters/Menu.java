@@ -27,7 +27,8 @@ public class Menu {
         System.out.println("6: Print all Shop data");
         System.out.println("7: Create new block");
         System.out.println("8: Search Block by id");
-        System.out.println("9: Quit");
+        System.out.println("9: Print Block data");
+        System.out.println("10: Quit");
     }
 
     public void startApplication() {
@@ -53,7 +54,7 @@ public class Menu {
                     double productPrice = ui.askDoubleFromUser();
                     System.out.println("Amount of product:");
                     double productAmount = ui.askDoubleFromUser();
-                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName, productPrice, productAmount));
+                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName));
                     System.out.println(newProductInfo);
 //                case 3;
                     List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
@@ -119,7 +120,7 @@ public class Menu {
 //                    Product product1 = productRepository.searchProductById(productId1);
                     ProductList product1 = new ProductList();
                     Shop shop1 = shopRepository.searchShopById(shopId);
-                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, product1, finalAmount, LocalDate.of(blockYear,blockMonth,blockDay)));
+                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, LocalDate.of(blockYear,blockMonth,blockDay)));
                     System.out.println(result);
                     printMenu();
                     break;

@@ -29,8 +29,8 @@ public class ProductListRepository {
                 "product_id INT NOT NULL," +
                 "block_id INT NOT NULL, " +
 //                "name VARCHAR(50) NOT NULL," +
-//                "price DOUBLE NOT NULL," +
-//                "amount DOUBLE NOT NULL" +
+                "price DOUBLE NOT NULL," +
+                "amount DOUBLE NOT NULL" +
                 "FOREIGN KEY (product_id) REFERENCES product(id), " +
                 "FOREIGN KEY (block_id) REFERENCES block(id) " +
                 ");";
@@ -39,6 +39,16 @@ public class ProductListRepository {
             statement.execute(sqlCreateTable);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    public void updateTable () {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String update = "ALTER TABLE productList MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT";
+            PreparedStatement preparedStatement = connection.prepareStatement(update);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
