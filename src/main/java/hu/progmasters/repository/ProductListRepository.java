@@ -25,12 +25,12 @@ public class ProductListRepository {
 
     public void createProductListTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS productList (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "product_id INT NOT NULL," +
+                "id INT NOT NULL PRIMARY KEY, " +
+                "product_id INT NOT NULL, " +
                 "block_id INT NOT NULL, " +
 //                "name VARCHAR(50) NOT NULL," +
-                "price DOUBLE NOT NULL," +
-                "amount DOUBLE NOT NULL" +
+                "price DOUBLE NOT NULL, " +
+                "amount DOUBLE NOT NULL, " +
                 "FOREIGN KEY (product_id) REFERENCES product(id), " +
                 "FOREIGN KEY (block_id) REFERENCES block(id) " +
                 ");";

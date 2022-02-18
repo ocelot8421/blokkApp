@@ -21,8 +21,8 @@ public class ProductRepository {
 
     public void createProductTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "name VARCHAR(50) NOT NULL," +
+                "id INT NOT NULL PRIMARY KEY, " +
+                "name VARCHAR(50) NOT NULL " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);

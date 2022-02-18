@@ -23,10 +23,10 @@ public class BlockRepository {
 
     public void createBlockTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS block (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "shop_id INT NOT NULL," +
+                "id INT NOT NULL PRIMARY KEY, " +
+                "shop_id INT NOT NULL, " +
                 "date DATE NOT NULL, " +
-                "FOREIGN KEY (shop_id) REFERENCES shop(id), " +
+                "FOREIGN KEY (shop_id) REFERENCES shop(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
