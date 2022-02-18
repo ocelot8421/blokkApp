@@ -31,7 +31,7 @@ public class ProductListRepository {
 //                "name VARCHAR(50) NOT NULL," +
                 "price DOUBLE NOT NULL, " +
                 "amount DOUBLE NOT NULL, " +
-                "PRIMARY KEY (id)" +
+                "PRIMARY KEY (id), " +
                 "FOREIGN KEY (product_id) REFERENCES product(id), " +
                 "FOREIGN KEY (block_id) REFERENCES block(id) " +
                 ");";

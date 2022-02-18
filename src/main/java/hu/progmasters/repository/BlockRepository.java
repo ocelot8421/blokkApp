@@ -26,7 +26,7 @@ public class BlockRepository {
                 "id INT AUTO_INCREMENT NOT NULL, " +
                 "shop_id INT NOT NULL, " +
                 "date DATE NOT NULL, " +
-                "PRIMARY KEY (id)" +
+                "PRIMARY KEY (id), " +
                 "FOREIGN KEY (shop_id) REFERENCES shop(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {

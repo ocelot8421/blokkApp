@@ -29,7 +29,7 @@ public class ShopRepository {
                 "id INT AUTO_INCREMENT NOT NULL, " +
                 "name VARCHAR(50), " +
                 "city VARCHAR(50), " +
-                "street VARCHAR(50) " +
+                "street VARCHAR(50), " +
                 "PRIMARY KEY (id)" +
                 "); ";
         try (Statement statement = connection.createStatement()) {
