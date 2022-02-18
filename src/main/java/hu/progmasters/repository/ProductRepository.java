@@ -20,10 +20,11 @@ public class ProductRepository {
     }
 
     public void createProductTable() {
-        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "name VARCHAR(50) NOT NULL" +
-                ");";
+        String sqlCreateTable =  "CREATE TABLE IF NOT EXISTS product (" +
+                "id INT AUTO_INCREMENT NOT NULL," +
+        "name VARCHAR(50) NOT NULL," +
+        "PRIMARY KEY (id)" +
+                ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
         } catch (SQLException throwables) {
