@@ -24,13 +24,14 @@ public class ProductListRepository {
     }
 
     public void createProductListTable() {
-        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS productList (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "product_id INT NOT NULL," +
+        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS productList " +
+                "(id INT AUTO_INCREMENT NOT NULL, " +
+                "product_id INT NOT NULL, " +
                 "block_id INT NOT NULL, " +
 //                "name VARCHAR(50) NOT NULL," +
-                "price DOUBLE NOT NULL," +
+                "price DOUBLE NOT NULL, " +
                 "amount DOUBLE NOT NULL, " +
+                "PRIMARY KEY (id)" +
                 "FOREIGN KEY (product_id) REFERENCES product(id), " +
                 "FOREIGN KEY (block_id) REFERENCES block(id) " +
                 ");";
@@ -54,11 +55,13 @@ public class ProductListRepository {
 
     public String createNewProductList(ProductList productList) {
         String infoBack = "ProductList can not be created";
-        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?)";
+        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductListStatement)) {
             preparedStatement.setInt(1, productList.getIdList());
             preparedStatement.setInt(2,productList.getIdProduct());
             preparedStatement.setInt(3, productList.getIdBlokk());
+            preparedStatement.setDouble(4, productList.getPrice());
+            preparedStatement.setDouble(5, productList.getAmount());
 
             preparedStatement.executeUpdate();
             infoBack = "Productlist is created";

@@ -23,9 +23,10 @@ public class BlockRepository {
 
     public void createBlockTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS block (" +
-                "id INT NOT NULL PRIMARY KEY," +
-                "shop_id INT NOT NULL," +
+                "id INT AUTO_INCREMENT NOT NULL, " +
+                "shop_id INT NOT NULL, " +
                 "date DATE NOT NULL, " +
+                "PRIMARY KEY (id)" +
                 "FOREIGN KEY (shop_id) REFERENCES shop(id) " +
                 ");";
         try (Statement statement = connection.createStatement()) {
@@ -48,12 +49,12 @@ public class BlockRepository {
 
     public String createNewBlock(Block block) {
         String infoBack = "Block can not be created";
-        String sql = "INSERT INTO block VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO block VALUES (?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
        //     preparedStatement.setInt(3, block.getProductList().getIdList());
-            preparedStatement.setString(5, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
+            preparedStatement.setString(3, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
             preparedStatement.executeUpdate();
             infoBack = "Block created";
         } catch (SQLException throwables) {
@@ -85,7 +86,7 @@ public class BlockRepository {
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
-                                resultSet.getString("franchise"),
+                                resultSet.getString("name"),
                                 (Address) resultSet.getObject("address")),
                         resultSet.getDate("date").toLocalDate());
 
@@ -117,7 +118,7 @@ public class BlockRepository {
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
-                                resultSet.getString("franchise"),
+                                resultSet.getString("name"),
                                 (Address) resultSet.getObject("address")),
                         resultSet.getDate("date").toLocalDate());
 

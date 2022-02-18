@@ -20,10 +20,10 @@ public class ProductRepository {
     }
 
     public void createProductTable() {
-        String sqlCreateTable =  "CREATE TABLE IF NOT EXISTS product (" +
+        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
                 "id INT AUTO_INCREMENT NOT NULL," +
-        "name VARCHAR(50) NOT NULL," +
-        "PRIMARY KEY (id)" +
+                "name VARCHAR(50) NOT NULL," +
+                "PRIMARY KEY (id)" +
                 ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
@@ -46,7 +46,7 @@ public class ProductRepository {
 
     public String createNewProduct(Product product) {
         String infoBack = "Product can not be created";
-        String insertProductStatement = "INSERT INTO product VALUES (?,?,?,?)";
+        String insertProductStatement = "INSERT INTO product VALUES (?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());

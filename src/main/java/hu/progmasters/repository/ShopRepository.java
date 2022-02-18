@@ -25,14 +25,15 @@ public class ShopRepository {
 
     public void createShopTable() {
 
-        String createTable = "CREATE TABLE IF NOT EXISTS shop" +
-                    "(ID INT PRIMARY KEY, " +
-                    "name VARCHAR(50), " +
-                    "city VARCHAR(50), " +
-                    "street VARCHAR(50) " +
-                    "); ";
-           try (Statement statement = connection.createStatement()) {
-               statement.execute(createTable);
+        String createTable = "CREATE TABLE IF NOT EXISTS shop (" +
+                "id INT AUTO_INCREMENT NOT NULL, " +
+                "name VARCHAR(50), " +
+                "city VARCHAR(50), " +
+                "street VARCHAR(50) " +
+                "PRIMARY KEY (id)" +
+                "); ";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(createTable);
 
         } catch (SQLException e) {
             e.printStackTrace();
