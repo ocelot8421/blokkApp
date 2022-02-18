@@ -45,7 +45,7 @@ public class ProductRepository {
 
     public String createNewProduct(Product product) {
         String infoBack = "Product can not be created";
-        String insertProductStatement = "INSERT INTO product VALUES (?,?,?,?)";
+        String insertProductStatement = "INSERT INTO product VALUES (?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());

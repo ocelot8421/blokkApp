@@ -54,11 +54,13 @@ public class ProductListRepository {
 
     public String createNewProductList(ProductList productList) {
         String infoBack = "ProductList can not be created";
-        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?)";
+        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductListStatement)) {
             preparedStatement.setInt(1, productList.getIdList());
             preparedStatement.setInt(2,productList.getIdProduct());
             preparedStatement.setInt(3, productList.getIdBlokk());
+            preparedStatement.setDouble(4, productList.getPrice());
+            preparedStatement.setDouble(5, productList.getAmount());
 
             preparedStatement.executeUpdate();
             infoBack = "Productlist is created";
