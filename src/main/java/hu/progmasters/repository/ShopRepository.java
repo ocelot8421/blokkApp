@@ -38,6 +38,15 @@ public class ShopRepository {
             e.printStackTrace();
         }
     }
+    public void updateTable () {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+            String update = "ALTER TABLE shop MODIFY COLUMN ID INT PRIMARY KEY AUTO_INCREMENT";
+            PreparedStatement preparedStatement = connection.prepareStatement(update);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public String createNewShop(Shop shop) {
         String infoBack = "Shop can not be created";

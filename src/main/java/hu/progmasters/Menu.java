@@ -27,7 +27,8 @@ public class Menu {
         System.out.println("6: Print all Shop data");
         System.out.println("7: Create new block");
         System.out.println("8: Search Block by id");
-        System.out.println("9: Quit");
+        System.out.println("9: Print Block data");
+        System.out.println("10: Quit");
     }
 
     public void startApplication() {
@@ -36,6 +37,7 @@ public class Menu {
         productRepository.createProductTable();
         shopRepository.createShopTable();
         blockRepository.createBlockTable(); //TODO createBlockTable
+        productListRepository.createProductListTable();
         printMenu();
         while (flag) {
             int userInput = ui.askIntFromUser();
@@ -52,7 +54,7 @@ public class Menu {
                     double productPrice = ui.askDoubleFromUser();
                     System.out.println("Amount of product:");
                     double productAmount = ui.askDoubleFromUser();
-                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName, productPrice, productAmount));
+                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName));
                     System.out.println(newProductInfo);
 //                case 3;
                     List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
@@ -115,9 +117,10 @@ public class Menu {
                     int blockMonth = ui.askIntFromUser();
                     System.out.println("Block day: ");
                     int blockDay = ui.askIntFromUser();
-                    Product product1 = productRepository.searchProductById(productId1);
+//                    Product product1 = productRepository.searchProductById(productId1);
+                    ProductList product1 = new ProductList();
                     Shop shop1 = shopRepository.searchShopById(shopId);
-                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, product1, finalAmount, LocalDate.of(blockYear, blockMonth, blockDay)));
+                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, LocalDate.of(blockYear,blockMonth,blockDay)));
                     System.out.println(result);
                     printMenu();
                     break;
@@ -127,7 +130,15 @@ public class Menu {
                     printMenu();
                     break;
                 case 9:
-                    ProductList productList = productListRepository.createProductListTable();
+                    System.out.println("ID of List");
+                    int idList = ui.askIntFromUser();
+                    System.out.println("ID of Product");
+                    int idProduct = ui.askIntFromUser();
+                    System.out.println("ID of Blokk");
+                    int idBlokk = ui.askIntFromUser();
+                    String newProductListInfo = productListRepository.createNewProductList(
+                            new ProductList(idList, idProduct, idBlokk));
+                    System.out.println(newProductListInfo);
                 case 10:
                     flag = false;
             }
