@@ -51,7 +51,7 @@ public class ShopRepository {
 
     public String createNewShop(Shop shop) {
         String infoBack = "Shop can not be created";
-        String insertShopStatement = "INSERT INTO shops VALUES (?,?,?,?)";
+        String insertShopStatement = "INSERT INTO shop VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertShopStatement)) {
             preparedStatement.setInt(1, shop.getId());
             preparedStatement.setString(2, shop.getFranchise());
@@ -62,8 +62,6 @@ public class ShopRepository {
             infoBack = "Shop created";
         } catch (SQLException throwables) {
             System.out.println("This id has been used for a shop. PLease, chose another.");
-            //TODO van egy shop meg egy shops táblázat is - Hajni
-            //TODO utolsó id-t kiiratni - Hajni
             throwables.printStackTrace();
         }
         return infoBack;
@@ -114,7 +112,7 @@ public class ShopRepository {
             int affectedRows = statement.executeUpdate(updateShop);
 
 
-            System.out.println("Number of modified shops: " + affectedRows);
+            System.out.println("Number of modified shopRecords: " + affectedRows);
             giveShopInfo();
 
         } catch (SQLException e) {
@@ -125,7 +123,7 @@ public class ShopRepository {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             Statement statement = connection.createStatement();
 
-            String shopInfo = "SELECT * from shops";
+            String shopInfo = "SELECT * from shop";
             ResultSet resultSet = statement.executeQuery(shopInfo);
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
@@ -148,7 +146,7 @@ public class ShopRepository {
 
     public Shop searchShopById(int id) {
         Shop shop = null;
-        String sql = "SELECT id, name, city, street  FROM shops WHERE id = ?";
+        String sql = "SELECT id, name, city, street  FROM shop WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -174,7 +172,7 @@ public class ShopRepository {
 
     public List<Shop> printOutAllShopDetails() {
         List<Shop> shops = new ArrayList<>();
-        String sql = "SELECT * FROM shops";
+        String sql = "SELECT * FROM shop";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
