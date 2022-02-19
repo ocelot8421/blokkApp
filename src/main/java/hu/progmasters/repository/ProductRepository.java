@@ -19,6 +19,8 @@ public class ProductRepository {
         }
     }
 
+
+
     public void createProductTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
                 "id INT AUTO_INCREMENT NOT NULL," +
@@ -45,11 +47,12 @@ public class ProductRepository {
 
 
     public String createNewProduct(Product product) {
+
         String infoBack = "Product can not be created";
-        String insertProductStatement = "INSERT INTO product VALUES (?,?)";
+        String insertProductStatement = "INSERT INTO product (name) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
-            preparedStatement.setInt(1, product.getId());
-            preparedStatement.setString(2, product.getName());
+//            preparedStatement.setInt(1, );
+            preparedStatement.setString(1, product.getName());
 
             preparedStatement.executeUpdate();
             infoBack = "Product is created";
@@ -79,7 +82,7 @@ public class ProductRepository {
 
     public Product searchProductById(int id) {
         Product product = null;
-        String sql = "SELECT id, name, price, amount FROM product WHERE id = ?";
+        String sql = "SELECT id, name FROM product WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();

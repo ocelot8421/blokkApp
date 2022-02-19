@@ -9,6 +9,11 @@ public class Product {
   //  private double amount;
     // private Category category;
 
+
+    public Product(String name) {
+        this.name = name;
+    }
+
     public Product(int id, String name) {
         this.id = id;
         this.name = name;

@@ -46,15 +46,15 @@ public class Menu {
 //                    case 3;
                     List<Product> products = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
                     System.out.println(products);
-                    System.out.println("Id of product: ");
-                    int productId = ui.askIntFromUser(); //TODO AUTO_INCREMENT-ET BEÁLLÍTANI (minden id-ra)
+//                    System.out.println("Id of product: ");
+//                    int productId = ui.askIntFromUser();
                     System.out.println("Name of product: ");
                     String productName = ui.askTextFromUser();
-                    System.out.println("Price of product: ");
-                    double productPrice = ui.askDoubleFromUser();
-                    System.out.println("Amount of product:");
-                    double productAmount = ui.askDoubleFromUser();
-                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName));
+//                    System.out.println("Price of product: ");
+//                    double productPrice = ui.askDoubleFromUser();
+//                    System.out.println("Amount of product:");
+//                    double productAmount = ui.askDoubleFromUser();
+                    String newProductInfo = productRepository.createNewProduct(new Product(productName));
                     System.out.println(newProductInfo);
 //                case 3;
                     List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
@@ -62,6 +62,7 @@ public class Menu {
                     printMenu();
                     break;
                 case 2:
+                    System.out.println("Which product are you looking for? (id)");
                     Product product = productRepository.searchProductById(ui.askIntFromUser());
                     System.out.println(product);
                     printMenu();
