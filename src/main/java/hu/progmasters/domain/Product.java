@@ -31,6 +31,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "\n" + id + " | " + name;
+        return id + " | " + name;
     }
 }

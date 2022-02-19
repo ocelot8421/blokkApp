@@ -17,9 +17,9 @@ public class Ui {
     }
 
     public double askDoubleFromUser() {
-        double userInt = scanner.nextDouble();
-        scanner.nextLine();
-        return userInt;
+//        double userDouble = scanner.nextDouble();
+//        scanner.nextLine();
+        return Double.parseDouble(scanner.nextLine());
     }
 
 }

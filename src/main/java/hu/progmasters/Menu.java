@@ -48,22 +48,16 @@ public class Menu {
             int userInput = ui.askIntFromUser();
             switch (userInput) {
                 case 1:
-//                    case 3;
-                    List<Product> products = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
-                    System.out.println(products);
-//                    System.out.println("Id of product: ");
-//                    int productId = ui.askIntFromUser();
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     System.out.println("Name of product: ");
                     String productName = ui.askTextFromUser();
-//                    System.out.println("Price of product: ");
-//                    double productPrice = ui.askDoubleFromUser();
-//                    System.out.println("Amount of product:");
-//                    double productAmount = ui.askDoubleFromUser();
                     String newProductInfo = productRepository.createNewProduct(new Product(productName));
                     System.out.println(newProductInfo);
-//                case 3;
-                    List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
-                    System.out.println(products1);
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     printMenu();
                     break;
                 case 2:
@@ -73,29 +67,27 @@ public class Menu {
                     printMenu();
                     break;
                 case 3:
-                    List<Product> products3 = productRepository.printOutAllProductDetails();
-                    System.out.println(products3);
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     printMenu();
                     break;
                 case 4:
-                    System.out.println("ShopDB till now:");
-                    List<Shop> shops = shopRepository.printOutAllShopDetails();
-                    System.out.println(shops);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     System.out.println("Name of the new shop:");
                     String name = ui.askTextFromUser();
-//                    System.out.println("ID of the new shop:");
-//                    int shopID = ui.askIntFromUser();
-                    System.out.println("City of the new shop's address:");
+                    System.out.println("City:");
                     String city = ui.askTextFromUser();
-                    System.out.println("Street of the new shop's address:");
+                    System.out.println("Street:");
                     String street = ui.askTextFromUser();
-//                    System.out.println("ID of the new shop's address:");
-//                    int addressID = ui.askIntFromUser();
                     Address address = new Address(city, street);
                     String newShopInfo = shopRepository.createNewShop(new Shop(name, address));
                     System.out.println(newShopInfo);
-                    List<Shop> shops4 = shopRepository.printOutAllShopDetails();
-                    System.out.println(shops4);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     printMenu();
                     break;
                 case 5:
@@ -105,14 +97,15 @@ public class Menu {
                     printMenu();
                     break;
                 case 6:
-                    List<Shop> shops11 = shopRepository.printOutAllShopDetails(); //TODO ne legyen ennyi változó (shopsXY)
-                    System.out.println(shops11);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     printMenu();
                     break;
                 case 7:
-//                    System.out.println("Id of block");
-//                    int blockId = ui.askIntFromUser();
-                    System.out.println(shopRepository.printOutAllShopDetails());
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     System.out.println("Id of shop");
                     int shopId = ui.askIntFromUser();
                     System.out.println(productRepository.printOutAllProductDetails());
@@ -139,20 +132,52 @@ public class Menu {
                     printMenu();
                     break;
                 case 9:
-                    List<Block> blockList = blockRepository.printOutAllBlockDetails();
-                    printList(blockList);
-//                    System.out.println(blockList);
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
                     printMenu();
                     break;
                 case 10:
-                    System.out.println("development in progress");
+                    System.out.println("ProductList DB:");
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
+                    System.out.println("Blokk DB: ");
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
+                    System.out.println("Blokk ID:");
+                    int blokkId = ui.askIntFromUser();
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
+                    System.out.println("Product ID");
+                    int productId = ui.askIntFromUser();
+                    System.out.println("Price:");
+                    double price = ui.askDoubleFromUser();
+                    System.out.println("Amount: (example: 0.2)");
+                    double amount = ui.askDoubleFromUser();
+                    String result2 = productListRepository.createNewProductList(
+                            new ProductList(productId, blokkId, price, amount)
+                    );
+                    System.out.println("ProductList DB:");
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
+                    System.out.println("Blokk DB: ");
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
                     break;
                 case 11:
-                    System.out.println("development in progress");
+                    ProductList productList = productListRepository.searchProductListById(ui.askIntFromUser());
+                    System.out.println(productList);
+                    printMenu();
                     break;
                 case 12:
-                    List<ProductList> productLists = productListRepository.printOutAllProductListDetails();
-                    System.out.println(productLists);
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
                     printMenu();
                     break;
                 case 13:

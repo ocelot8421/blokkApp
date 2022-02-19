@@ -40,8 +40,8 @@ public class ProductListRepository {
         }
     }
 
-    public void updateTable () {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+    public void updateTable() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String update = "ALTER TABLE productList MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.executeUpdate();
@@ -52,13 +52,13 @@ public class ProductListRepository {
 
     public String createNewProductList(ProductList productList) {
         String infoBack = "ProductList can not be created";
-        String insertProductListStatement = "INSERT INTO productList VALUES (?,?,?,?,?)";
+        String insertProductListStatement = "INSERT INTO productList (product_id, block_id, price, amount) VALUES (?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductListStatement)) {
-            preparedStatement.setInt(1, productList.getIdList());
-            preparedStatement.setInt(2,productList.getIdProduct());
-            preparedStatement.setInt(3, productList.getIdBlokk());
-            preparedStatement.setDouble(4, productList.getPrice());
-            preparedStatement.setDouble(5, productList.getAmount());
+//            preparedStatement.setInt(1, productList.getIdList());
+            preparedStatement.setInt(1, productList.getIdProduct());
+            preparedStatement.setInt(2, productList.getIdBlokk());
+            preparedStatement.setDouble(3, productList.getPrice());
+            preparedStatement.setDouble(4, productList.getAmount());
 
             preparedStatement.executeUpdate();
             infoBack = "Productlist is created";
@@ -70,18 +70,72 @@ public class ProductListRepository {
         return infoBack;
     }
 
-    public List<ProductList> printOutAllProductListDetails() {
-        List<ProductList> productLists = new ArrayList<>();
-        String sql = "SELECT * FROM productList";
+    public ProductList searchProductListById(int id) {
+        ProductList productList = null;
+        String sql = "SELECT * FROM product WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-
-                productLists.add(new ProductList(
+            if (resultSet.next()) {
+                productList = new ProductList(
+                        resultSet.getInt("id"),
                         resultSet.getInt("product_id"),
-                        resultSet.getInt("blokk_id"),
+                        resultSet.getInt("block_id"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productList;
+    }
+
+    public List<ProductList> printOutAllProductListDetails() {
+        List<ProductList> productLists = new ArrayList<>();
+        String sql = "SELECT *, " +
+                "p.name AS product_name, " +
+                "s.name AS shop_name " +
+                "FROM block b " +
+                "JOIN productList pl ON pl.block_id = b.id " +
+                "JOIN product p ON pl.product_id = p.id " +
+                "JOIN shop s ON b.shop_id = s.id ;";
+
+//        SELECT *,
+//                p.name AS product_name,
+//                s.name AS shop_name
+//                FROM productList pl
+//                JOIN block b ON pl.block_id = b.id
+//                JOIN product p ON pl.product_id = p.id
+//                JOIN shop s ON b.shop_id = s.id ;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Product product;
+            Block blokk;
+            Shop shop;
+            Address address;
+            while (resultSet.next()) {
+                product = new Product(resultSet.getString("product_name"));
+                address = new Address(
+                        resultSet.getString("city"),
+                        resultSet.getString("street")
+                );
+                shop = new Shop(
+                        resultSet.getString("shop_name"),
+                        address
+                );
+                blokk = new Block(
+                        resultSet.getInt("shop_id"),
+                        shop,
+                        resultSet.getString("date")
+                );
+                productLists.add(new ProductList(
+                        product,
+                        blokk,
+                        resultSet.getInt("product_id"),
+                        resultSet.getInt("block_id"),
                         resultSet.getDouble("price"),
                         resultSet.getDouble("amount")
                 ));
