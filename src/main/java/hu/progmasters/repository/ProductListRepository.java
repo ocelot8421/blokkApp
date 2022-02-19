@@ -1,9 +1,6 @@
 package hu.progmasters.repository;
 
-import hu.progmasters.domain.Block;
-import hu.progmasters.domain.Product;
-import hu.progmasters.domain.ProductList;
-import hu.progmasters.domain.Shop;
+import hu.progmasters.domain.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -71,6 +68,28 @@ public class ProductListRepository {
 
         }
         return infoBack;
+    }
+
+    public List<ProductList> printOutAllProductListDetails() {
+        List<ProductList> productLists = new ArrayList<>();
+        String sql = "SELECT * FROM productList";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                productLists.add(new ProductList(
+                        resultSet.getInt("product_id"),
+                        resultSet.getInt("blokk_id"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount")
+                ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productLists;
     }
 
 //    public List<Product> addProduct (Product product) {

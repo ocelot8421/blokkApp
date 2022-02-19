@@ -48,8 +48,7 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "\n[" + id + "] " +
-                "shopName: " + franchise + " | " +
+        return "s.id[" + id + "] " + franchise + " | " +
                 address;
     }
 }

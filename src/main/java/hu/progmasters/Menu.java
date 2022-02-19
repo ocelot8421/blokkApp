@@ -1,7 +1,9 @@
 package hu.progmasters;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import hu.progmasters.domain.*;
 import hu.progmasters.repository.ProductListRepository;
@@ -19,16 +21,19 @@ public class Menu {
 
     public void printMenu() {
         System.out.println("Press number for choose between options");
-        System.out.println("1: Create new Product and save to database");
-        System.out.println("2: Search Product by id");
-        System.out.println("3: Print all Product data");
-        System.out.println("4: Create new Shop and save to database");
-        System.out.println("5: Search Shop by id");
-        System.out.println("6: Print all Shop data");
-        System.out.println("7: Create new block");
-        System.out.println("8: Search Block by id");
-        System.out.println("9: Print Block data");
-        System.out.println("10: Quit");
+        System.out.print(" 1: Create new  Product and save to database | ");
+        System.out.print(" 2: Search  Product by id | ");
+        System.out.println(" 3: Print all  Product data");
+        System.out.print(" 4: Create new  Shop    and save to database | ");
+        System.out.print(" 5: Search  Shop    by id | ");
+        System.out.println(" 6: Print all  Shop    data");
+        System.out.print(" 7: Create new  Blokk   and save to database | ");
+        System.out.print(" 8: Search  Blokk   by id | ");
+        System.out.println(" 9: Print all  Blokk   data");
+        System.out.print("10: Create new  P.List  and save to database | ");
+        System.out.print("11: Search  P.List  by id | ");
+        System.out.println("12: Print all  P.List  data");
+        System.out.println("13: Quit");
     }
 
     public void startApplication() {
@@ -105,10 +110,12 @@ public class Menu {
                     printMenu();
                     break;
                 case 7:
-                    System.out.println("Id of block");
-                    int blockId = ui.askIntFromUser();
+//                    System.out.println("Id of block");
+//                    int blockId = ui.askIntFromUser();
+                    System.out.println(shopRepository.printOutAllShopDetails());
                     System.out.println("Id of shop");
                     int shopId = ui.askIntFromUser();
+                    System.out.println(productRepository.printOutAllProductDetails());
                     System.out.println("Id of product");
                     int productId1 = ui.askIntFromUser();
                     System.out.println("Final amount: "); //TODO számold össze!!
@@ -122,7 +129,7 @@ public class Menu {
 //                    Product product1 = productRepository.searchProductById(productId1);
                     ProductList product1 = new ProductList();
                     Shop shop1 = shopRepository.searchShopById(shopId);
-                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, LocalDate.of(blockYear,blockMonth,blockDay)));
+                    String result = blockRepository.createNewBlock(new Block(shop1, (blockYear + "-" + blockMonth + "-" + blockDay)));
                     System.out.println(result);
                     printMenu();
                     break;
@@ -132,18 +139,31 @@ public class Menu {
                     printMenu();
                     break;
                 case 9:
-                    System.out.println("ID of List");
-                    int idList = ui.askIntFromUser();
-                    System.out.println("ID of Product");
-                    int idProduct = ui.askIntFromUser();
-                    System.out.println("ID of Blokk");
-                    int idBlokk = ui.askIntFromUser();
-                    String newProductListInfo = productListRepository.createNewProductList(
-                            new ProductList(idList, idProduct, idBlokk));
-                    System.out.println(newProductListInfo);
+                    List<Block> blockList = blockRepository.printOutAllBlockDetails();
+                    printList(blockList);
+//                    System.out.println(blockList);
+                    printMenu();
+                    break;
                 case 10:
+                    System.out.println("development in progress");
+                    break;
+                case 11:
+                    System.out.println("development in progress");
+                    break;
+                case 12:
+                    List<ProductList> productLists = productListRepository.printOutAllProductListDetails();
+                    System.out.println(productLists);
+                    printMenu();
+                    break;
+                case 13:
                     flag = false;
             }
+        }
+    }
+
+    private void printList(List<Block> list) {
+        for (Object record : list) {
+            System.out.println(record);
         }
     }
 }

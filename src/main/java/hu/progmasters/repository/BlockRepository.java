@@ -3,7 +3,9 @@ package hu.progmasters.repository;
 import hu.progmasters.domain.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class BlockRepository {
         }
     }
 
-    public void updateTable () {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)){
+    public void updateTable() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String update = "ALTER TABLE block MODIFY COLUMN id INT PRIMARY KEY AUTO_INCREMENT";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.executeUpdate();
@@ -53,8 +55,9 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-       //     preparedStatement.setInt(3, block.getProductList().getIdList());
-            preparedStatement.setString(3, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
+            //     preparedStatement.setInt(3, block.getProductList().getIdList());
+//            preparedStatement.setString(3, DateTimeFormatter.ofPattern("yyyy-MM-dd").format((TemporalAccessor) block.getDate()));
+            preparedStatement.setString(3, block.getDate());
             preparedStatement.executeUpdate();
             infoBack = "Block created";
         } catch (SQLException throwables) {
@@ -88,7 +91,7 @@ public class BlockRepository {
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("name"),
                                 (Address) resultSet.getObject("address")),
-                        resultSet.getDate("date").toLocalDate());
+                        resultSet.getString("date"));
 
             }
         } catch (SQLException throwables) {
@@ -100,27 +103,35 @@ public class BlockRepository {
     public Block searchBlockById(int id) {
 
         Block block = null;
-        String sql = "SELECT * FROM blokk_app.block b \n" +
-                "JOIN shop s ON s.id = b.shop_id\n" +
-                "JOIN product p ON p.id = b.product_id" +
+        String sql = "SELECT * FROM blokk_app.block b " +
+                "JOIN shop s ON s.id = b.shop_id " +
+//                "JOIN product p ON p.id = b.product_id" +
                 "WHERE b.id = ?";
+
+
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            Address address;
             while (resultSet.next()) {
                 ProductList productList = new ProductList();
 //                productList.add(new Product(resultSet.getInt("product_id"),
 //                        resultSet.getString("name"),
 //                        resultSet.getDouble("price"),
 //                        resultSet.getDouble("amount")));
+                address = new Address(
+                        resultSet.getInt("id"),
+                        resultSet.getString("city"),
+                        resultSet.getString("street")
+                );
                 block = new Block(
                         resultSet.getInt("id"),
                         new Shop(resultSet.getInt("shop_id"),
                                 resultSet.getString("name"),
-                                (Address) resultSet.getObject("address")),
-                        resultSet.getDate("date").toLocalDate());
+                                address),
+                        resultSet.getString("date"));
 
             }
         } catch (SQLException throwables) {
@@ -129,25 +140,51 @@ public class BlockRepository {
         return block;
     }
 
-    public String createNewBlockTestHajni(Block block) {
-        String infoBack = "Block can not be created";
-        String insertFlightStatement = "INSERT INTO blokk VALUES (?,?,?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
-            preparedStatement.setInt(1, block.getId());
-            preparedStatement.setInt(2, block.getShop().getId());
-            preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(block.getDate()));
-            preparedStatement.executeUpdate();
-            infoBack = "Block created";
-        } catch (
-                SQLException throwables) {
+//    public String createNewBlockTestHajni(Block block) {
+//        String infoBack = "Block can not be created";
+//        String insertFlightStatement = "INSERT INTO blokk VALUES (?,?,?,?)";
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
+//            preparedStatement.setInt(1, block.getId());
+//            preparedStatement.setInt(2, block.getShop().getId());
+//            preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format((TemporalAccessor) block.getDate()));
+//            preparedStatement.executeUpdate();
+//            infoBack = "Block created";
+//        } catch (
+//                SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        return infoBack;
+//    }
+
+
+    public List<Block> printOutAllBlockDetails() {
+        List<Block> blokks = new ArrayList<>();
+        String sql = "SELECT * FROM blokk_app.block b " +
+                "JOIN blokk_app.shop s ON s.id = b.shop_id; ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Shop shop;
+            while (resultSet.next()) {
+                shop = new Shop(
+                        resultSet.getInt("shop_id"),
+                        resultSet.getString("name"),
+                        new Address(
+                                resultSet.getString("city"),
+                                resultSet.getString("street")
+                        )
+                );
+                blokks.add(new Block(
+                        resultSet.getInt("id"),
+                        shop,
+                        resultSet.getString("date")
+                ));
+            }
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return infoBack;
-    }
-
-    public Block searchBlockByIdTestHajni(int askIntFromUser) {
-        System.out.println("Fejlesztés alatt");
-        return null;
+        return blokks;
     }
 }
 

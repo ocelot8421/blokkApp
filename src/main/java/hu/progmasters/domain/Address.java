@@ -42,6 +42,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "[" + id + "] address: " + city + ", " + street + " út/utca";
+        return "a.id[" + id + "] " + city + ", " + street + " út/utca";
     }
 }

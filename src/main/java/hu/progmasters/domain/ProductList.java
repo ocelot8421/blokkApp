@@ -17,11 +17,7 @@ public class ProductList {
     public ProductList() {
     }
 
-//    public ProductList(int id, Product product) {
-//        this.id = id;
-//        this.product = product;
-//        this.productList.add(product);
-//    }
+
 
     public ProductList(int idList, int idProduct, int idBlokk) {
 
