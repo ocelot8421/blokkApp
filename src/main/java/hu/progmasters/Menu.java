@@ -73,24 +73,25 @@ public class Menu {
                     printMenu();
                     break;
                 case 4:
+                    System.out.println("ShopDB till now:");
                     List<Shop> shops = shopRepository.printOutAllShopDetails();
                     System.out.println(shops);
                     System.out.println("Name of the new shop:");
                     String name = ui.askTextFromUser();
-                    System.out.println("ID of the new shop:");
-                    int shopID = ui.askIntFromUser();
+//                    System.out.println("ID of the new shop:");
+//                    int shopID = ui.askIntFromUser();
                     System.out.println("City of the new shop's address:");
                     String city = ui.askTextFromUser();
                     System.out.println("Street of the new shop's address:");
                     String street = ui.askTextFromUser();
-                    System.out.println("ID of the new shop's address:");
-                    int addressID = ui.askIntFromUser(); //TODO kinyomtatni ezt is
-                    Address address = new Address(addressID, city, street);
-                    String newShopInfo = shopRepository.createNewShop(new Shop(shopID, name, address));
+//                    System.out.println("ID of the new shop's address:");
+//                    int addressID = ui.askIntFromUser();
+                    Address address = new Address(city, street);
+                    String newShopInfo = shopRepository.createNewShop(new Shop(name, address));
                     System.out.println(newShopInfo);
-                    printMenu();
                     List<Shop> shops4 = shopRepository.printOutAllShopDetails();
                     System.out.println(shops4);
+                    printMenu();
                     break;
                 case 5:
                     System.out.println("ID of the shop which you want to find:");
