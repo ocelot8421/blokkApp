@@ -7,6 +7,12 @@ public class Shop {
     private Address address;
     //private KeyWord keyWord;
 
+
+    public Shop(String franchise, Address address) {
+        this.franchise = franchise;
+        this.address = address;
+    }
+
     public Shop(int id, String franchise, Address address) {
         this.id = id;
         this.franchise = franchise;
@@ -42,9 +48,7 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "\n Shop: " +
-                "id: " + id + ", " +
-                "name: " + franchise + ", " +
-                "address: " + address;
+        return "s.id[" + id + "] " + franchise + " | " +
+                address;
     }
 }

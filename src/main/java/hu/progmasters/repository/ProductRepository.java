@@ -19,11 +19,14 @@ public class ProductRepository {
         }
     }
 
+
+
     public void createProductTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
-                "id INT NOT NULL PRIMARY KEY, " +
-                "name VARCHAR(50) NOT NULL " +
-                ");";
+                "id INT AUTO_INCREMENT NOT NULL," +
+                "name VARCHAR(50) NOT NULL," +
+                "PRIMARY KEY (id)" +
+                ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreateTable);
         } catch (SQLException throwables) {
@@ -44,11 +47,12 @@ public class ProductRepository {
 
 
     public String createNewProduct(Product product) {
+
         String infoBack = "Product can not be created";
-        String insertProductStatement = "INSERT INTO product VALUES (?,?)";
+        String insertProductStatement = "INSERT INTO product (name) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
-            preparedStatement.setInt(1, product.getId());
-            preparedStatement.setString(2, product.getName());
+//            preparedStatement.setInt(1, );
+            preparedStatement.setString(1, product.getName());
 
             preparedStatement.executeUpdate();
             infoBack = "Product is created";
@@ -59,26 +63,12 @@ public class ProductRepository {
         return infoBack;
     }
 
-    public List<Product> searchAllProductOrderByPrice() {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM product ORDER BY price";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                products.add(new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
+
 
 
     public Product searchProductById(int id) {
         Product product = null;
-        String sql = "SELECT id, name, price, amount FROM product WHERE id = ?";
+        String sql = "SELECT id, name FROM product WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();

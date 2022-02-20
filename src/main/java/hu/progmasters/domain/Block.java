@@ -1,23 +1,33 @@
 package hu.progmasters.domain;
 
-import java.time.LocalDate;
-
 public class Block {
 
     private int id;
     private Shop shop;
-    private LocalDate date;
+//    private Date date;
+    private String date;
 //    private Product product;
- //   private ProductList productList;
+//   private ProductList productList;
 
 
-    public Block(int id, Shop shop, LocalDate date) {
+
+    public Block(Shop shop, String date) {
+        this.shop = shop;
+        this.date = date;
+    }
+
+    public Block(int id, Shop shop, String date) {
         this.id = id;
         this.shop = shop;
         this.date = date;
 //        this.product = product;
 //        this.productList = pl;
     }
+
+    public Block(int block_id, int shop_id, Shop shop, String date) {
+
+    }
+
 
     public int getId() {
         return id;
@@ -28,7 +38,7 @@ public class Block {
     }
 
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -38,11 +48,10 @@ public class Block {
 
     @Override
     public String toString() {
-        return "Block{" +
-                "id=" + id +
-                ", shop=" + shop +
-                ", date=" + date +
+        return "b.id[" + id +
+                "] | " + shop +
+                ", date=" + date
    //             ", product=" + productList +
-                '}';
+                ;
     }
 }

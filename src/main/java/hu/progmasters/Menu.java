@@ -1,7 +1,9 @@
 package hu.progmasters;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import hu.progmasters.domain.*;
 import hu.progmasters.repository.ProductListRepository;
@@ -19,16 +21,20 @@ public class Menu {
 
     public void printMenu() {
         System.out.println("Press number for choose between options");
-        System.out.println("1: Create new Product and save to database");
-        System.out.println("2: Search Product by id");
-        System.out.println("3: Print all Product data");
-        System.out.println("4: Create new Shop and save to database");
-        System.out.println("5: Search Shop by id");
-        System.out.println("6: Print all Shop data");
-        System.out.println("7: Create new block");
-        System.out.println("8: Search Block by id");
-        System.out.println("9: Print Block data");
-        System.out.println("10: Quit");
+        System.out.print(" 1: Create new  Product and save to database | ");
+        System.out.print(" 2: Search  Product by id | ");
+        System.out.println(" 3: Print all  Product data");
+        System.out.print(" 4: Create new  Shop    and save to database | ");
+        System.out.print(" 5: Search  Shop    by id | ");
+        System.out.println(" 6: Print all  Shop    data");
+        System.out.print(" 7: Create new  Blokk   and save to database | ");
+        System.out.print(" 8: Search  Blokk   by id | ");
+        System.out.println(" 9: Print all  Blokk   data");
+        System.out.print("10: Create new  P.List  and save to database | ");
+        System.out.print("11: Search  P.List  by id | ");
+        System.out.println("12: Print all product order by price | ");
+        System.out.println("13: Print all  P.List  data");
+        System.out.println("14: Quit");
     }
 
     public void startApplication() {
@@ -43,53 +49,47 @@ public class Menu {
             int userInput = ui.askIntFromUser();
             switch (userInput) {
                 case 1:
-//                    case 3;
-                    List<Product> products = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
-                    System.out.println(products);
-                    System.out.println("Id of product: ");
-                    int productId = ui.askIntFromUser(); //TODO AUTO_INCREMENT-ET BEÁLLÍTANI (minden id-ra)
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     System.out.println("Name of product: ");
                     String productName = ui.askTextFromUser();
-                    System.out.println("Price of product: ");
-                    double productPrice = ui.askDoubleFromUser();
-                    System.out.println("Amount of product:");
-                    double productAmount = ui.askDoubleFromUser();
-                    String newProductInfo = productRepository.createNewProduct(new Product(productId, productName));
+                    String newProductInfo = productRepository.createNewProduct(new Product(productName));
                     System.out.println(newProductInfo);
-//                case 3;
-                    List<Product> products1 = productRepository.printOutAllProductDetails(); //TODO hogy hívom meg a saját case-ét?
-                    System.out.println(products1);
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     printMenu();
                     break;
                 case 2:
+                    System.out.println("Which product are you looking for? (id)");
                     Product product = productRepository.searchProductById(ui.askIntFromUser());
                     System.out.println(product);
                     printMenu();
                     break;
                 case 3:
-                    List<Product> products3 = productRepository.printOutAllProductDetails();
-                    System.out.println(products3);
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
                     printMenu();
                     break;
                 case 4:
-                    List<Shop> shops = shopRepository.printOutAllShopDetails();
-                    System.out.println(shops);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     System.out.println("Name of the new shop:");
                     String name = ui.askTextFromUser();
-                    System.out.println("ID of the new shop:");
-                    int shopID = ui.askIntFromUser();
-                    System.out.println("City of the new shop's address:");
+                    System.out.println("City:");
                     String city = ui.askTextFromUser();
-                    System.out.println("Street of the new shop's address:");
+                    System.out.println("Street:");
                     String street = ui.askTextFromUser();
-                    System.out.println("ID of the new shop's address:");
-                    int addressID = ui.askIntFromUser(); //TODO kinyomtatni ezt is
-                    Address address = new Address(addressID, city, street);
-                    String newShopInfo = shopRepository.createNewShop(new Shop(shopID, name, address));
+                    Address address = new Address(city, street);
+                    String newShopInfo = shopRepository.createNewShop(new Shop(name, address));
                     System.out.println(newShopInfo);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     printMenu();
-                    List<Shop> shops4 = shopRepository.printOutAllShopDetails();
-                    System.out.println(shops4);
                     break;
                 case 5:
                     System.out.println("ID of the shop which you want to find:");
@@ -98,15 +98,18 @@ public class Menu {
                     printMenu();
                     break;
                 case 6:
-                    List<Shop> shops11 = shopRepository.printOutAllShopDetails(); //TODO ne legyen ennyi változó (shopsXY)
-                    System.out.println(shops11);
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     printMenu();
                     break;
                 case 7:
-                    System.out.println("Id of block");
-                    int blockId = ui.askIntFromUser();
+                    for (Shop shopDetail : shopRepository.printOutAllShopDetails()) {
+                        System.out.println(shopDetail);
+                    }
                     System.out.println("Id of shop");
                     int shopId = ui.askIntFromUser();
+                    System.out.println(productRepository.printOutAllProductDetails());
                     System.out.println("Id of product");
                     int productId1 = ui.askIntFromUser();
                     System.out.println("Final amount: "); //TODO számold össze!!
@@ -120,7 +123,7 @@ public class Menu {
 //                    Product product1 = productRepository.searchProductById(productId1);
                     ProductList product1 = new ProductList();
                     Shop shop1 = shopRepository.searchShopById(shopId);
-                    String result = blockRepository.createNewBlock(new Block(blockId, shop1, LocalDate.of(blockYear,blockMonth,blockDay)));
+                    String result = blockRepository.createNewBlock(new Block(shop1, (blockYear + "-" + blockMonth + "-" + blockDay)));
                     System.out.println(result);
                     printMenu();
                     break;
@@ -130,18 +133,70 @@ public class Menu {
                     printMenu();
                     break;
                 case 9:
-                    System.out.println("ID of List");
-                    int idList = ui.askIntFromUser();
-                    System.out.println("ID of Product");
-                    int idProduct = ui.askIntFromUser();
-                    System.out.println("ID of Blokk");
-                    int idBlokk = ui.askIntFromUser();
-                    String newProductListInfo = productListRepository.createNewProductList(
-                            new ProductList(idList, idProduct, idBlokk));
-                    System.out.println(newProductListInfo);
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
+                    printMenu();
+                    break;
                 case 10:
+                    System.out.println("ProductList DB:");
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
+                    System.out.println("Blokk DB: ");
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
+                    System.out.println("Blokk ID:");
+                    int blokkId = ui.askIntFromUser();
+                    for (Product productDetail : productRepository.printOutAllProductDetails()) {
+                        System.out.println(productDetail);
+                    }
+                    System.out.println("Product ID");
+                    int productId = ui.askIntFromUser();
+                    System.out.println("Price:");
+                    double price = ui.askDoubleFromUser();
+                    System.out.println("Amount: (example: 0.2)");
+                    double amount = ui.askDoubleFromUser();
+                    String result2 = productListRepository.createNewProductList(
+                            new ProductList(productId, blokkId, price, amount)
+                    );
+                    System.out.println("ProductList DB:");
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
+                    System.out.println("Blokk DB: ");
+                    for (Block blockDetail : blockRepository.printOutAllBlockDetails()) {
+                        System.out.println(blockDetail);
+                    }
+                    break;
+                case 11:
+                    System.out.println("ProductList ID: ");
+                    ProductList productList = productListRepository.searchProductListById(ui.askIntFromUser());
+                    System.out.println(productList);
+                    printMenu();
+                    break;
+                case 12:
+                    List<ProductList> products = productListRepository.searchAllProductOrderByPrice();
+                    System.out.println(products);
+                    printMenu();
+                    break;
+
+                case 13:
+                    for (ProductList productListDetail : productListRepository.printOutAllProductListDetails()) {
+                        System.out.println(productListDetail);
+                    }
+                    printMenu();
+                    break;
+                case 14:
                     flag = false;
             }
+        }
+    }
+
+    private void printList(List<Block> list) {
+        for (Object record : list) {
+            System.out.println(record);
         }
     }
 }
