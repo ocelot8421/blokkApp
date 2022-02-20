@@ -25,7 +25,6 @@ public class ProductListRepository {
                 "(id INT AUTO_INCREMENT NOT NULL, " +
                 "product_id INT NOT NULL, " +
                 "block_id INT NOT NULL, " +
-//                "name VARCHAR(50) NOT NULL," +
                 "price DOUBLE NOT NULL, " +
                 "amount DOUBLE NOT NULL, " +
                 "PRIMARY KEY (id), " +

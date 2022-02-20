@@ -94,15 +94,8 @@ public class ProductList {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
-    }
-
     public int getIdBlokk() {
         return idBlokk;
     }
 
-    public void setIdBlokk(int idBlokk) {
-        this.idBlokk = idBlokk;
-    }
 }

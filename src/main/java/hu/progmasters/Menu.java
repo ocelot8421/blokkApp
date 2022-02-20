@@ -1,16 +1,13 @@
 package hu.progmasters;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
 import hu.progmasters.domain.*;
-import hu.progmasters.repository.ProductListRepository;
-import hu.progmasters.repository.ShopRepository;
 import hu.progmasters.repository.BlockRepository;
+import hu.progmasters.repository.ProductListRepository;
 import hu.progmasters.repository.ProductRepository;
+import hu.progmasters.repository.ShopRepository;
 import hu.progmasters.ui.Ui;
+
+import java.util.List;
 
 public class Menu {
     ProductRepository productRepository = new ProductRepository();
@@ -42,7 +39,7 @@ public class Menu {
         boolean flag = true;
         productRepository.createProductTable();
         shopRepository.createShopTable();
-        blockRepository.createBlockTable(); //TODO createBlockTable
+        blockRepository.createBlockTable();
         productListRepository.createProductListTable();
         printMenu();
         while (flag) {
@@ -112,7 +109,7 @@ public class Menu {
                     System.out.println(productRepository.printOutAllProductDetails());
                     System.out.println("Id of product");
                     int productId1 = ui.askIntFromUser();
-                    System.out.println("Final amount: "); //TODO számold össze!!
+                    System.out.println("Final amount: ");
                     double finalAmount = ui.askDoubleFromUser();
                     System.out.println("Block year: ");
                     int blockYear = ui.askIntFromUser();
@@ -120,7 +117,6 @@ public class Menu {
                     int blockMonth = ui.askIntFromUser();
                     System.out.println("Block day: ");
                     int blockDay = ui.askIntFromUser();
-//                    Product product1 = productRepository.searchProductById(productId1);
                     ProductList product1 = new ProductList();
                     Shop shop1 = shopRepository.searchShopById(shopId);
                     String result = blockRepository.createNewBlock(new Block(shop1, (blockYear + "-" + blockMonth + "-" + blockDay)));
@@ -128,7 +124,7 @@ public class Menu {
                     printMenu();
                     break;
                 case 8:
-                    Block block = blockRepository.searchBlockById(ui.askIntFromUser()); //TODO BLOKKLEKÉRÉST MEGCSINÁLNI....
+                    Block block = blockRepository.searchBlockById(ui.askIntFromUser());
                     System.out.println(block);
                     printMenu();
                     break;

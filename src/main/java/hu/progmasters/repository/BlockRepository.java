@@ -3,9 +3,6 @@ package hu.progmasters.repository;
 import hu.progmasters.domain.*;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +52,7 @@ public class BlockRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, block.getId());
             preparedStatement.setInt(2, block.getShop().getId());
-            //     preparedStatement.setInt(3, block.getProductList().getIdList());
-//            preparedStatement.setString(3, DateTimeFormatter.ofPattern("yyyy-MM-dd").format((TemporalAccessor) block.getDate()));
+//          preparedStatement.setString(3, DateTimeFormatter.ofPattern("yyyy-MM-dd").format((TemporalAccessor) block.getDate()));
             preparedStatement.setString(3, block.getDate());
             preparedStatement.executeUpdate();
             infoBack = "Block created";
@@ -105,10 +101,7 @@ public class BlockRepository {
         Block block = null;
         String sql = "SELECT * FROM blokk_app.block b " +
                 "JOIN shop s ON s.id = b.shop_id " +
-//                "JOIN product p ON p.id = b.product_id" +
                 "WHERE b.id = ?";
-
-
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
@@ -116,11 +109,6 @@ public class BlockRepository {
 
             Address address;
             while (resultSet.next()) {
-                ProductList productList = new ProductList();
-//                productList.add(new Product(resultSet.getInt("product_id"),
-//                        resultSet.getString("name"),
-//                        resultSet.getDouble("price"),
-//                        resultSet.getDouble("amount")));
                 address = new Address(
                         resultSet.getInt("id"),
                         resultSet.getString("city"),
@@ -139,23 +127,6 @@ public class BlockRepository {
         }
         return block;
     }
-
-//    public String createNewBlockTestHajni(Block block) {
-//        String infoBack = "Block can not be created";
-//        String insertFlightStatement = "INSERT INTO blokk VALUES (?,?,?,?)";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(insertFlightStatement)) {
-//            preparedStatement.setInt(1, block.getId());
-//            preparedStatement.setInt(2, block.getShop().getId());
-//            preparedStatement.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd").format((TemporalAccessor) block.getDate()));
-//            preparedStatement.executeUpdate();
-//            infoBack = "Block created";
-//        } catch (
-//                SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        return infoBack;
-//    }
-
 
     public List<Block> printOutAllBlockDetails() {
         List<Block> blokks = new ArrayList<>();

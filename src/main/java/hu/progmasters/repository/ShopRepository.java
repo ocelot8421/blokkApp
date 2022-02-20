@@ -58,12 +58,9 @@ public class ShopRepository {
             preparedStatement.setString(3, shop.getAddress().getCity());
             preparedStatement.setString(4, shop.getAddress().getStreet());
             preparedStatement.executeUpdate();
-//            System.out.println("Shop created");
             infoBack = "Shop created";
         } catch (SQLException throwables) {
             System.out.println("This id has been used for a shop. PLease, chose another.");
-            //TODO van egy shop meg egy shops táblázat is - Hajni
-            //TODO utolsó id-t kiiratni - Hajni
             throwables.printStackTrace();
         }
         return infoBack;

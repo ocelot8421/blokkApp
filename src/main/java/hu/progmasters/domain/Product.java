@@ -6,7 +6,6 @@ public class Product {
     private String name;
 
   //  private double price; //TODO az ár függ a helytől és időtől is - blokknak lesz a példányváltozója
-  //  private double amount;
     // private Category category;
 
 

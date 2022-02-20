@@ -20,7 +20,6 @@ public class ProductRepository {
     }
 
 
-
     public void createProductTable() {
         String sqlCreateTable = "CREATE TABLE IF NOT EXISTS product (" +
                 "id INT AUTO_INCREMENT NOT NULL," +
@@ -51,14 +50,11 @@ public class ProductRepository {
         String infoBack = "Product can not be created";
         String insertProductStatement = "INSERT INTO product (name) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertProductStatement)) {
-//            preparedStatement.setInt(1, );
             preparedStatement.setString(1, product.getName());
-
             preparedStatement.executeUpdate();
             infoBack = "Product is created";
         } catch (SQLException throwables) {
             System.out.println(" -- Exception: " + throwables.getMessage());
-//            throwables.printStackTrace();
         }
         return infoBack;
     }

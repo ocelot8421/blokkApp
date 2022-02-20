@@ -5,7 +5,7 @@ public class Shop {
     private int id;
     private String franchise;
     private Address address;
-    //private KeyWord keyWord;
+
 
 
     public Shop(String franchise, Address address) {
@@ -17,9 +17,6 @@ public class Shop {
         this.id = id;
         this.franchise = franchise;
         this.address = address;
-    }
-
-    public Shop() {
     }
 
     public int getId() {
