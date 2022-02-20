@@ -65,7 +65,9 @@ public class ProductList {
 
     @Override
     public String toString() {
-        return blokk.getShop().getFranchise() + ", " +
+        return "[" +
+                idBlokk + "] " +
+                blokk.getShop().getFranchise() + ", " +
                 blokk.getShop().getAddress().getCity() + ", " +
                 blokk.getShop().getAddress().getStreet() + " u., " +
                 blokk.getDate() + " | " +
