@@ -178,7 +178,9 @@ public class Menu {
                     break;
                 case 12:
                     List<ProductList> products = productListRepository.searchAllProductOrderByPrice();
-                    System.out.println(products);
+                    for (ProductList list : products) {
+                        System.out.println(list);
+                    }
                     printMenu();
                     break;
 

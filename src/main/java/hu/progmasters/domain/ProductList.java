@@ -15,8 +15,6 @@ public class ProductList {
     public ProductList() {
     }
 
-    public ProductList(int idList, int idProduct, int idBlokk) {
-    }
 
     public ProductList(int idList, int idProduct, int idBlokk, double price, double amount) {
         this.idList = idList;
@@ -50,6 +48,7 @@ public class ProductList {
         this.price = price;
         this.amount = amount;
     }
+
 
 //    @Override
 //    public String toString() {

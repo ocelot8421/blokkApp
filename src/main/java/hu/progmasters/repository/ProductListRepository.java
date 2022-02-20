@@ -72,17 +72,41 @@ public class ProductListRepository {
 
     public List<ProductList> searchAllProductOrderByPrice() {
         List<ProductList> products = new ArrayList<>();
-        String sql = "SELECT * FROM productList ORDER BY price";
+        String sql = "SELECT *, s.name AS shop_name, " +
+                "p.name AS product_name " +
+                "FROM productList " +
+                "JOIN block b ON block_id = b.id " +
+                "JOIN product p ON product_id = p.id " +
+                "JOIN shop s ON shop_id = s.id " +
+                "ORDER BY price;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-             products.add(new ProductList(
-                     resultSet.getInt("id"),
-                     resultSet.getInt("product_id"),
-                     resultSet.getInt("block_id"),
-                     resultSet.getDouble("price"),
-                     resultSet.getDouble("amount")
-             ));
+
+                Address address = new Address(
+                        resultSet.getString("city"),
+                        resultSet.getString("street"));
+                Shop shop = new Shop(
+                        resultSet.getString("shop_name"),
+                        address
+                );
+                Block block = new Block(
+                        shop,
+                        resultSet.getString("date")
+                );
+                Product product = new Product(
+                        resultSet.getString("product_name")
+                );
+                ProductList productList = new ProductList(
+                        product,
+                        block,
+                        resultSet.getInt("id"),
+                        resultSet.getInt("b.id"),
+                        resultSet.getDouble("price"),
+                        resultSet.getDouble("amount")
+                );
+                products.add(productList);
             }
         } catch (SQLException e) {
             e.printStackTrace();
